@@ -65,8 +65,11 @@ export function startWatcher(name:string){
     LOG.ok('Started watcher: ' + name);
 
 }
-export function startWatchers(){
-    Object.keys(watchers).forEach(function(name:string){
+export function startWatchers(names?:string[]){
+    if(_.isUndefined(names)){
+        names = Object.keys(watchers);
+    }
+    names.forEach(function(name:string){
         startWatcher(name);
     });
 }

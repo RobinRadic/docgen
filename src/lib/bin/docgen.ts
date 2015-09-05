@@ -6,20 +6,21 @@ import chalk = require('chalk');
 import fse = require('fs-extra');
 import path = require('path');
 
+
 import * as docgen from './../index';
 import {LOG,printTitle} from './../cli';
 import {Generator} from './../generator'
 import {startServer,startWatchers} from './../modules/server';
 
-function dump(val:any) {
-    console.log(util.inspect(val, {colors: true, hidden: true, depth: 7}));
-}
 
 var argv:any = yargs
     .usage('$0 <command> [options] \n$0 help <command>')
     .version(docgen.VERSION)
-    .command('init', 'Initialise in this project. Creates a docgen.json file.')
-    .command('generate', 'Generate documentation.',
+    .wrap(yargs.terminalWidth() / 100 * 80)
+
+    // COMMANDS
+    .command('init', '  Initialise in this project. Creates a docgen.json file.')
+    .command('generate', chalk.yellow('H') + ' Generate documentation.',
     function (yargs:yargs.Argv) {
         argv = yargs
             .usage('$0 generate <command> [options]')
@@ -29,26 +30,48 @@ var argv:any = yargs
             .command('typedoc', 'Only generate typescript docs')
             .command('index', 'Only generate the index page')
             .option('clean', {type: 'boolean', describe: 'Clean/remove destination first'})
-            .help('help')
+            .help('help').alias('h', 'help')
+            .count('verbose').alias('v', 'verbose').describe('v', 'Set log verbosity level (-v = info, -vv = warnings, -vvv = debug )')
             .argv
 
     })
-    .command('watch', 'Start file watchers')
-    .command('serve', 'Start a static server to preview the output and start file watchers')
-    .help('help').alias('h', 'help')
+    .command('watch', '  Start file watchers')
+    .command('serve', chalk.yellow('H') + ' Start a static server to preview the output and start file watchers',
+    function (yargs:yargs.Argv) {
+        argv = yargs
+            .usage('$0 serve [--watch]')
+            .option('watch', {alias: 'w', type: 'boolean', describe: 'Also start file watchers'})
+            .help('help').alias('h', 'help')
+            .argv
+    })
+
+    // OPTIONS
     .config('c').describe('c', 'Define custom docgen.json path').alias('c', 'config')
+    .boolean('D').alias('D', 'dev').describe('D', 'Enable dev mode, you should not use this.')
     .boolean('q').alias('q', 'quiet')
     .count('verbose').alias('v', 'verbose').describe('v', 'Set log verbosity level (-v = info, -vv = warnings, -vvv = debug )')
+    .help('help').alias('h', 'help')
+
+    // EXAMPLES
     .example('$0 help generate', 'Show help for the generate command, shows all sub-commands and options too')
     .example('$0 generate theme --clean', 'Clean/remove old files then generate the theme files only')
     .example('$0 serve --watch', 'Start a local http server to preview the result and start file watchers that will auto-generate on file change')
     .example('$0 generate -vvv', 'Run a command with log verbosity level 3 (debug) showing additional information. Usefull if you encounter errors.')
-    .wrap(yargs.terminalWidth() / 100 * 80)
     .argv;
 
-LOG.setEnabled(true);
+
+// -h --help
+if (argv.help) {
+    printHelp();
+    process.exit();
+}
+
+
+// Set log
+LOG.enable();
 LOG.setVerbosity(argv.verbose);
-LOG.is('debug') && dump(argv);
+argv.D && LOG.out(chalk.yellow.bold('Dev mode enabled'));
+argv.D && LOG.show(argv);
 
 function printHelp() {
     printTitle();
@@ -56,27 +79,19 @@ function printHelp() {
 }
 
 
-if (argv.help) {
-    printHelp();
-    process.exit();
-}
-
+// -q --quiet
 if (argv.q) {
-    LOG.setEnabled(false);
-
-}
-
-export var configFilePath:string = path.join(process.cwd(), 'docgen.json');
-export function loadConfig() {
-    if (!fse.existsSync(configFilePath)) {
-        LOG.error('Could not read config file mdocz.json. You can create one using the init command.');
-    }
-    docgen.loadConfigFile(configFilePath);
+    LOG.disable()
 }
 
 
 var command:string = argv._[0];
 
+/****************************/
+// Create (init) or load the config file. If -c is provided, load custom path
+/****************************/
+
+var configFilePath:string = path.join(process.cwd(), 'docgen.json');
 if (command === 'init') {
     LOG.debug('Writing config file to ' + configFilePath);
     if (fse.existsSync(configFilePath)) {
@@ -87,9 +102,25 @@ if (command === 'init') {
     process.exit();
 }
 
+export function loadConfig(configFilePath:string) {
+    if (!fse.existsSync(configFilePath)) {
+        LOG.error('Could not read config file mdocz.json. You can create one using the init command.');
+    }
+    docgen.loadConfigFile(configFilePath);
+}
 
-loadConfig();
+if (argv.c) {
+    LOG.debug('Using custom config path: ' + argv.c);
+    loadConfig(argv.c);
+} else {
+    LOG.debug('Loading config from default path');
+    loadConfig(configFilePath);
+}
 
+var watchers:string[] = ['docs', 'config'];
+if (argv.dev) {
+    watchers.concat(['dev_views', 'dev_sassdoc', 'dev_assets', 'dev_bower']);
+}
 var gen:Generator = new Generator();
 
 switch (command) {
@@ -100,7 +131,6 @@ switch (command) {
             gen.clean();
             LOG.ok('Cleaned up destination directory');
         }
-
 
         var nested = argv._[1];
         if (_.isUndefined(nested)) {
@@ -145,15 +175,17 @@ switch (command) {
         break;
 
     case "serve":
-        LOG.ok('Startin watchers');
-        startWatchers();
+        if (argv.watch) {
+            LOG.ok('Startin watchers');
+            startWatchers(watchers);
+        }
         LOG.ok('Startin server on localhost:' + docgen.config('server.port'));
         startServer();
         break;
 
     case "watch":
         LOG.ok('Startin watchers');
-        startWatchers();
+        startWatchers(watchers);
         break;
 
     default:

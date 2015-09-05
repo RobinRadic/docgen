@@ -33,7 +33,10 @@ export function removeFM(str):string {
 }
 
 export function parseFM(fileContent:string):{} {
-    return jsyaml.safeLoad(fileContent.toString().match(fmExp)[1]);
+    if(!fmExp.test(fileContent)){
+        return {};
+    }
+    return jsyaml.safeLoad(fileContent.match(fmExp)[1]);
 }
 
 export function parse(fileContent, removeFrontMatter):string {

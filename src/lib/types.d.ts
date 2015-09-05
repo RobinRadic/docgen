@@ -1,9 +1,9 @@
 /// <reference path="../types.d.ts" />
 /// <reference path="./types/tsd.d.ts" />
-/// <reference path="./custom_types/yargs.d.ts" />
 /// <reference path='./custom_types/underscore.string.d.ts' />
 /// <reference path='./custom_types/tmp.d.ts' />
 /// <reference path='./custom_types/typedoc.d.ts' />
+/// <reference path='./custom_types/yargs.d.ts' />
 
 declare module "globule" {
     export function find(...args:any[]): string[];

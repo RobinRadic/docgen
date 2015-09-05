@@ -42,9 +42,9 @@ export class Typedoc  {
         var item:any = this.getConfig(name);
         var template:any = this.generator.compileView('typedoc');
         var glob:string = path.join(item.options.out, '**/*.html');
-        LOG.debug('transformGenerated:glob', glob);
+        //LOG.debug('transformGenerated:glob', glob);
         globule.find(glob).forEach(function(filePath:string){
-            LOG.debug('transformGenerated:forEach', filePath);
+            //LOG.debug('transformGenerated:forEach', filePath);
             var fileContent:string = fse.readFileSync(filePath, 'utf-8');
             var html:string = template({
                 typedoc: {
@@ -114,7 +114,7 @@ export class Typedoc  {
         var winExt = /^win/.test(process.platform) ? '.cmd' : '';
         var executable = path.resolve(require.resolve('typedoc/package.json'), '..', '..', '.bin', 'typedoc' + winExt);
         var child:ChildProcess = cp.execFileSync(executable, args, {
-            stdio: LOG.is('debug'),
+            stdio: LOG.is('debug') ? 'inherit' : 'pipe',
             env: process.env
 
         });

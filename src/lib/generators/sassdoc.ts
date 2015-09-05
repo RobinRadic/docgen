@@ -73,9 +73,7 @@ export class Sassdoc  {
         var item:any = this.getConfig(name);
         var template:any = this.generator.compileView('sassdoc');
         var glob:string = path.join(item.options.dest, '**/*.html');
-        LOG.debug('transformGenerated:glob', glob);
         globule.find(glob).forEach(function(filePath:string){
-            LOG.debug('transformGenerated:forEach', filePath);
             var fileContent:string = fse.readFileSync(filePath, 'utf-8');
             var html:string = template({
                 sassdoc: {
