@@ -1,0 +1,97 @@
+{
+    "title": "Documentation for my project",
+    "copyright": "Copyright 2015 &copy; Docgen",
+    "docs": "docs",
+    "dest": "gh-pages",
+    "baseUrl": "/",
+    "index": "README.md",
+    "generators": {
+        "typedoc": {
+            "node": {
+                "files": [
+                    "src/lib/**/*.ts"
+                ],
+                "options": {
+                    "name": "Scripting API",
+                    "module": "commonjs",
+                    "rootDir": "./src/lib",
+                    "target": "es5",
+                    "mode": "file",
+                    "experimentalDecorators": ""
+                }
+            }
+        },
+        "sassdoc": {
+            "styles": {
+                "files": [
+                    "src/styles"
+                ],
+                "options": {}
+            }
+        },
+        "jsdoc": []
+    },
+    "server": {
+        "port": 3000,
+        "logHttpRequests": false
+    },
+    "types": {
+        "doc": {
+            "view": "document",
+            "title": "Document"
+        }
+    },
+    "menu": [
+        {
+            "name": "Home",
+            "type": "index",
+            "icon": "fa fa-home"
+        },
+        {
+            "name": "API",
+            "type": "parent",
+            "icon": "fa fa-file-code-o",
+            "children": [
+                {
+                    "name": "Node JS",
+                    "typedoc": "node",
+                    "type": "typedoc",
+                    "icon": "fa fa-code"
+                },
+                {
+                    "name": "SCSS",
+                    "sassdoc": "styles",
+                    "type": "sassdoc",
+                    "icon": "fa fa-github"
+                }
+            ]
+        },
+        {
+            "name": "Getting Started",
+            "type": "parent",
+            "icon": "fa fa-dashboard",
+            "children": [
+                {
+                    "name": "Configuration",
+                    "doc": "configuration.md",
+                    "type": "doc",
+                    "icon": "fa fa-dashboard"
+                },
+                {
+                    "name": "CLI Examples",
+                    "doc": "configuration.md",
+                    "type": "doc",
+                    "icon": "fa fa-dashboard"
+                }
+            ]
+        },
+        {
+            "name": "Github",
+            "href": "https://github.com/robinradic/docgen",
+            "type": "href",
+            "icon": "fa fa-github"
+        }
+    ],
+    "googleAnalytics": "UA-XXXXX-YY",
+    "tracking": "<img src=\"http://piwik.example.org/piwik.php?idsite={$IDSITE}amp;rec=1\" style=\"border:0\" alt=\"\" />"
+}
