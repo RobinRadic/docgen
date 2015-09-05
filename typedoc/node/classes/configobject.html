@@ -1,0 +1,692 @@
+<!DOCTYPE html><!--[if IE 8]><html class="ie8" lang="en"><![endif]-->
+<!--[if IE 9]><html lang="en" class="ie9"><![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"><!--<![endif]-->
+  <head>
+    <title> Documentation for my project</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="http://robin.radic.nl/docgenassets/styles/stylesheet.css" type="text/css" rel="stylesheet" data-styler="stylesheet">
+    <link href="http://robin.radic.nl/docgenassets/styles/themes/theme-default.css" type="text/css" rel="stylesheet" data-styler="theme-default">
+    <link href="http://robin.radic.nl/docgenassets/styles/typedoc/main.css" type="text/css" rel="stylesheet" data-styler="stylesheet">
+  </head>
+  <body class="page-loading page-header-fixed page-sidebar-closed-hide-logo">
+    <div id="page-loader">
+      <div class="loader loader-page"></div>
+    </div>
+    <!-- #header-->
+    <div class="page-header navbar navbar-fixed-top">
+      <!-- .header-inner (#header > .header-inner)-->
+      <div class="page-header-inner">
+        <div class="page-logo"><a href="#" class="logo-default"><img src="http://robin.radic.nl/docgenassets/images/codex.png"></a>
+          <div class="menu-toggler sidebar-toggler"></div>
+        </div><a href="javascript:;" data-toggle="collapse" data-target=".navbar-collapse" class="menu-toggler responsive-toggler"></a>
+        <div class="page-actions">
+          <div class="btn-group">
+                    <div class="btn-group"><a href="javscript:;" type="button" data-toggle="dropdown" aria-expanded="false" class="btn dropdown-toggle btn-primary btn-sm">Project&nbsp;</a>
+                                      <ul class="dropdown-menu">
+                                                <li><a href="#">Themes</a></li>
+                                                <li><a href="#">Modules</a></li>
+                                                <li><a href="#">Codex</a></li>
+                                      </ul>
+                    </div>
+                    <div class="btn-group"><a href="javscript:;" type="button" data-toggle="dropdown" aria-expanded="false" class="btn dropdown-toggle btn-primary btn-sm">Master&nbsp;</a>
+                                      <ul class="dropdown-menu">
+                                                <li><a href="#">Master</a></li>
+                                                <li><a href="#">1.2.2</a></li>
+                                                <li><a href="#">1.2.1</a></li>
+                                                <li><a href="#">1.2.0</a></li>
+                                                <li><a href="#">1.1.0</a></li>
+                                                <li><a href="#">1.0.1</a></li>
+                                                <li><a href="#">1.0.0</a></li>
+                                      </ul>
+                    </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <!-- #page-->
+    <div class="page-container">
+      <!-- .page-sidebar-->
+      <div class="page-sidebar-wrapper">
+        <!-- .sidebar-->
+        <div class="page-sidebar navbar-collapse collapse">
+          <!-- .sidebar-menu-->
+          <ul data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" class="page-sidebar-menu">
+                            <li><a href="http:/robin.radic.nl/docgen/index.html"><i class="fa fa-home"></i><span class="title">Home</span></a>
+                            </li>
+                            <li><a href="javascript:;"><i class="fa fa-file-code-o"></i><span class="title">API</span><span class="arrow"></span></a>
+                                      <ul class="sub-menu">
+                                                        <li><a href="http:/robin.radic.nl/docgen/typedoc/node"><i class="fa fa-code"></i><span class="title">Node JS</span></a>
+                                                        </li>
+                                                        <li><a href="http:/robin.radic.nl/docgen/sassdoc/styles"><i class="fa fa-github"></i><span class="title">SCSS</span></a>
+                                                        </li>
+                                      </ul>
+                            </li>
+                            <li><a href="javascript:;"><i class="fa fa-dashboard"></i><span class="title">Getting Started</span><span class="arrow"></span></a>
+                                      <ul class="sub-menu">
+                                                        <li><a href="http:/robin.radic.nl/docgen/configuration.html"><i class="fa fa-dashboard"></i><span class="title">Configuration</span></a>
+                                                        </li>
+                                                        <li><a href="http:/robin.radic.nl/docgen/configuration.html"><i class="fa fa-dashboard"></i><span class="title">CLI Examples</span></a>
+                                                        </li>
+                                      </ul>
+                            </li>
+                            <li><a href="https://github.com/robinradic/docgen"><i class="fa fa-github"></i><span class="title">Github</span></a>
+                            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- .page-content-->
+      <div class="page-content-wrapper">
+        <div class="page-content"><div class="page-head">
+<div class="page-title">
+	<h1>Class ConfigObject</h1>
+</div>
+</div>
+<ul class="page-breadcrumb breadcrumb">
+<li>
+	<a href="../index.html">Globals</a> <i class="fa fa-arrow-right"></i>
+</li>
+<li> <a href="configobject.html">ConfigObject</a>  <i class="fa fa-arrow-right"></i> </li>
+</ul>
+<div class="page-content-seperator"></div>
+<div class="tsd-page-toolbar hide">
+<div class="container">
+	<div class="table-wrap">
+		<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+			<div class="field">
+				<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+				<input id="tsd-search-field" type="text" />
+			</div>
+			<ul class="results">
+				<li class="state loading">Preparing search index...</li>
+				<li class="state failure">The search index is not available</li>
+			</ul>
+			<a href="../index.html" class="title">Scripting API</a>
+		</div>
+		<div class="table-cell" id="tsd-widgets">
+			<div id="tsd-filter">
+				<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+				<div class="tsd-filter-group">
+					<div class="tsd-select" id="tsd-filter-visibility">
+						<span class="tsd-select-label">All</span>
+						<ul class="tsd-select-list">
+							<li data-value="public">Public</li>
+							<li data-value="protected">Public/Protected</li>
+							<li data-value="private" class="selected">All</li>
+						</ul>
+					</div>
+					<input type="checkbox" id="tsd-filter-inherited" checked />
+					<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+					<input type="checkbox" id="tsd-filter-externals" checked />
+					<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+					<input type="checkbox" id="tsd-filter-only-exported" />
+					<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+				</div>
+			</div>
+			<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+		</div>
+	</div>
+</div>
+</div>
+<div class="page-content-inner">
+<div class="row">
+	<div class="col-xs-8 col-content">
+		<section class="tsd-panel tsd-hierarchy">
+			<h3>Hierarchy</h3>
+			<ul class="tsd-hierarchy">
+				<li>
+					<span class="target">ConfigObject</span>
+				</li>
+			</ul>
+		</section>
+		<section class="tsd-panel">
+			<h3>Implements</h3>
+			<ul class="tsd-hierarchy">
+				<li><a href="../interfaces/iconfig.html" class="tsd-signature-type">IConfig</a></li>
+			</ul>
+		</section>
+		<section class="tsd-panel-group tsd-index-group">
+			<h2>Index</h2>
+			<section class="tsd-panel tsd-index-panel">
+				<div class="tsd-index-content">
+					<section class="tsd-index-section ">
+						<h3>Constructors</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="configobject.html#constructor" class="tsd-kind-icon">constructor</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+						<h3>Properties</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="configobject.html#alldelimiters" class="tsd-kind-icon">all<wbr>Delimiters</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="configobject.html#data" class="tsd-kind-icon">data</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="configobject.html#propstringtmplre" class="tsd-kind-icon">prop<wbr>String<wbr>Tmpl<wbr>Re</a></li>
+						</ul>
+					</section>
+					<section class="tsd-index-section ">
+						<h3>Methods</h3>
+						<ul class="tsd-index-list">
+							<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="configobject.html#adddelimiters" class="tsd-kind-icon">add<wbr>Delimiters</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="configobject.html#get" class="tsd-kind-icon">get</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="configobject.html#merge" class="tsd-kind-icon">merge</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="configobject.html#process" class="tsd-kind-icon">process</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="configobject.html#processtemplate" class="tsd-kind-icon">process<wbr>Template</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="configobject.html#raw" class="tsd-kind-icon">raw</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="configobject.html#set" class="tsd-kind-icon">set</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="configobject.html#setdelimiters" class="tsd-kind-icon">set<wbr>Delimiters</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class"><a href="configobject.html#unset" class="tsd-kind-icon">unset</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="configobject.html#escape" class="tsd-kind-icon">escape</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="configobject.html#getpropstring" class="tsd-kind-icon">get<wbr>Prop<wbr>String</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="configobject.html#makeproperty" class="tsd-kind-icon">make<wbr>Property</a></li>
+						</ul>
+					</section>
+				</div>
+			</section>
+		</section>
+		<section class="tsd-panel-group tsd-member-group ">
+			<h2>Constructors</h2>
+			<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<a name="constructor" class="tsd-anchor"></a>
+				<h3>constructor</h3>
+				<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">new <wbr>Config<wbr>Object<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="configobject.html" class="tsd-signature-type">ConfigObject</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L39">modules/configuration.ts:39</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> obj: <span class="tsd-signature-type">Object</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="configobject.html" class="tsd-signature-type">ConfigObject</a></h4>
+					</li>
+				</ul>
+			</section>
+		</section>
+		<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+			<h2>Properties</h2>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+				<a name="alldelimiters" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagPrivate">Private</span> all<wbr>Delimiters</h3>
+				<div class="tsd-signature tsd-kind-icon">all<wbr>Delimiters<span class="tsd-signature-symbol">:</span> <a href="../interfaces/idelimiterscollection.html" class="tsd-signature-type">IDelimitersCollection</a></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L38">modules/configuration.ts:38</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+				<a name="data" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagPrivate">Private</span> data</h3>
+				<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L37">modules/configuration.ts:37</a></li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
+				<a name="propstringtmplre" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> prop<wbr>String<wbr>Tmpl<wbr>Re</h3>
+				<div class="tsd-signature tsd-kind-icon">prop<wbr>String<wbr>Tmpl<wbr>Re<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L39">modules/configuration.ts:39</a></li>
+					</ul>
+				</aside>
+			</section>
+		</section>
+		<section class="tsd-panel-group tsd-member-group ">
+			<h2>Methods</h2>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+				<a name="adddelimiters" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagPrivate">Private</span> add<wbr>Delimiters</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<li class="tsd-signature tsd-kind-icon">add<wbr>Delimiters<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, opener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, closer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L127">modules/configuration.ts:127</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>name: <span class="tsd-signature-type">any</span></h5>
+							</li>
+							<li>
+								<h5>opener: <span class="tsd-signature-type">any</span></h5>
+							</li>
+							<li>
+								<h5>closer: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="get" class="tsd-anchor"></a>
+				<h3>get</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>prop<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/iconfig.html">IConfig</a>.<a href="../interfaces/iconfig.html#get">get</a></p>
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L84">modules/configuration.ts:84</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> prop: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="merge" class="tsd-anchor"></a>
+				<h3>merge</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">merge<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="configobject.html" class="tsd-signature-type">ConfigObject</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/iconfig.html">IConfig</a>.<a href="../interfaces/iconfig.html#merge">merge</a></p>
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L93">modules/configuration.ts:93</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>obj: <span class="tsd-signature-type">Object</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="configobject.html" class="tsd-signature-type">ConfigObject</a></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="process" class="tsd-anchor"></a>
+				<h3>process</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">process<span class="tsd-signature-symbol">(</span>raw<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/iconfig.html">IConfig</a>.<a href="../interfaces/iconfig.html#process">process</a></p>
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L103">modules/configuration.ts:103</a></li>
+							</ul>
+						</aside>
+						<div class="tsd-comment tsd-typography">
+						</div>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>raw: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+				<a name="processtemplate" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagPrivate">Private</span> process<wbr>Template</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<li class="tsd-signature tsd-kind-icon">process<wbr>Template<span class="tsd-signature-symbol">(</span>tmpl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L153">modules/configuration.ts:153</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>tmpl: <span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li>
+								<h5>options: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="raw" class="tsd-anchor"></a>
+				<h3>raw</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">raw<span class="tsd-signature-symbol">(</span>prop<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/iconfig.html">IConfig</a>.<a href="../interfaces/iconfig.html#raw">raw</a></p>
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L76">modules/configuration.ts:76</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> prop: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="set" class="tsd-anchor"></a>
+				<h3>set</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">(</span>prop<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="configobject.html" class="tsd-signature-type">ConfigObject</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/iconfig.html">IConfig</a>.<a href="../interfaces/iconfig.html#set">set</a></p>
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L88">modules/configuration.ts:88</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>prop: <span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li>
+								<h5>value: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="configobject.html" class="tsd-signature-type">ConfigObject</a></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+				<a name="setdelimiters" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagPrivate">Private</span> set<wbr>Delimiters</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<li class="tsd-signature tsd-kind-icon">set<wbr>Delimiters<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/idelimiter.html" class="tsd-signature-type">IDelimiter</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L143">modules/configuration.ts:143</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>name: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="../interfaces/idelimiter.html" class="tsd-signature-type">IDelimiter</a></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<a name="unset" class="tsd-anchor"></a>
+				<h3>unset</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<li class="tsd-signature tsd-kind-icon">unset<span class="tsd-signature-symbol">(</span>prop<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<p>Implementation of <a href="../interfaces/iconfig.html">IConfig</a>.<a href="../interfaces/iconfig.html#unset">unset</a></p>
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L62">modules/configuration.ts:62</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>prop: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+				<a name="escape" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagStatic">Static</span> escape</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<li class="tsd-signature tsd-kind-icon">escape<span class="tsd-signature-symbol">(</span>str<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L72">modules/configuration.ts:72</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>str: <span class="tsd-signature-type">string</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+				<a name="getpropstring" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagStatic">Static</span> get<wbr>Prop<wbr>String</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<li class="tsd-signature tsd-kind-icon">get<wbr>Prop<wbr>String<span class="tsd-signature-symbol">(</span>prop<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L68">modules/configuration.ts:68</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>prop: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+				<a name="makeproperty" class="tsd-anchor"></a>
+				<h3><span class="tsd-flag ts-flagStatic">Static</span> make<wbr>Property</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<li class="tsd-signature tsd-kind-icon">make<wbr>Property<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="../interfaces/iconfig.html" class="tsd-signature-type">IConfig</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/iconfigproperty.html" class="tsd-signature-type">IConfigProperty</a></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in <a href="https://github.com/robinradic/docgen/blob/master/src/lib/modules/configuration.ts#L48">modules/configuration.ts:48</a></li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>config: <a href="../interfaces/iconfig.html" class="tsd-signature-type">IConfig</a></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <a href="../interfaces/iconfigproperty.html" class="tsd-signature-type">IConfigProperty</a></h4>
+					</li>
+				</ul>
+			</section>
+		</section>
+	</div>
+	<div class="col-xs-4 col-menu menu-sticky-wrap menu-highlight">
+		<nav class="tsd-navigation primary">
+			<ul>
+				<li class="globals  ">
+					<a href="../index.html"><em>Globals</em></a>
+				</li>
+			</ul>
+		</nav>
+		<nav class="tsd-navigation secondary menu-sticky">
+			<ul class="before-current">
+			</ul>
+			<ul class="current">
+				<li class="current tsd-kind-class">
+					<a href="configobject.html" class="tsd-kind-icon">Config<wbr>Object</a>
+					<ul>
+						<li class=" tsd-kind-constructor tsd-parent-kind-class">
+							<a href="configobject.html#constructor" class="tsd-kind-icon">constructor</a>
+						</li>
+						<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+							<a href="configobject.html#alldelimiters" class="tsd-kind-icon">all<wbr>Delimiters</a>
+						</li>
+						<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+							<a href="configobject.html#data" class="tsd-kind-icon">data</a>
+						</li>
+						<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
+							<a href="configobject.html#propstringtmplre" class="tsd-kind-icon">prop<wbr>String<wbr>Tmpl<wbr>Re</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+							<a href="configobject.html#adddelimiters" class="tsd-kind-icon">add<wbr>Delimiters</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class">
+							<a href="configobject.html#get" class="tsd-kind-icon">get</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class">
+							<a href="configobject.html#merge" class="tsd-kind-icon">merge</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class">
+							<a href="configobject.html#process" class="tsd-kind-icon">process</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+							<a href="configobject.html#processtemplate" class="tsd-kind-icon">process<wbr>Template</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class">
+							<a href="configobject.html#raw" class="tsd-kind-icon">raw</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class">
+							<a href="configobject.html#set" class="tsd-kind-icon">set</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+							<a href="configobject.html#setdelimiters" class="tsd-kind-icon">set<wbr>Delimiters</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class">
+							<a href="configobject.html#unset" class="tsd-kind-icon">unset</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<a href="configobject.html#escape" class="tsd-kind-icon">escape</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<a href="configobject.html#getpropstring" class="tsd-kind-icon">get<wbr>Prop<wbr>String</a>
+						</li>
+						<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+							<a href="configobject.html#makeproperty" class="tsd-kind-icon">make<wbr>Property</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="after-current">
+			</ul>
+		</nav>
+	</div>
+</div>
+<footer>
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+</div>
+<div class="overlay"></div></div>
+      </div>
+    </div>
+    <div class="page-footer">
+      <div class="page-footer-inner">Copyright 2015 &copy; Codex
+      </div>
+      <div class="scroll-to-top"><i class="fa fa-level-up"></i></div>
+    </div>
+    <div id="customizer-plugin"></div>
+    <script src="http://robin.radic.nl/docgenassets/scripts/vendor.min.js"></script>
+    <script src="http://robin.radic.nl/docgenassets/scripts/config.js"></script>
+    <script>packadicConfig.requirejs.baseUrl = 'http://robin.radic.nl/docgenassets/scripts/';</script>
+    <script src="http://robin.radic.nl/docgenassets/scripts/init.js"></script>
+  </body>
+</html>
