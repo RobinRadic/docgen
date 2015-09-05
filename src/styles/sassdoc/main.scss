@@ -1,0 +1,55 @@
+@import "../base";
+/**
+ * Sass utils
+ */
+@import "utils/variables";
+@import "utils/functions";
+@import "utils/mixins";
+@import "utils/helpers";
+
+/**
+ * Vendors
+ */
+//@import "vendors/prism";
+
+/**
+ * Base stuff
+ */
+//@import "base/base";
+@import "base/layout";
+@import "base/helpers";
+
+/**
+ * Partials
+ */
+
+@import "partials/header";
+@import "partials/searchbar";
+@import "partials/sidebar";
+@import "partials/main";
+@import "partials/footer";
+@import "partials/item";
+
+.page-sassdoc {
+    .scroll-to-top {
+   //     text-align: left;
+   //     right: auto;
+   //     left: 33px;
+    }
+}
+
+.page-content {
+    padding: 0 !important;
+}
+
+
+@media (max-width: $screen-sm-max) {
+    .page-content-wrapper .page-content {
+        padding: 0 !important;
+    }
+}
+@media (max-width: $screen-md-max) {
+    .page-content-wrapper .page-content {
+        padding: 0 !important;
+    }
+}

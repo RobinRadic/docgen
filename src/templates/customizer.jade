@@ -1,0 +1,14 @@
+.preferences.panel.panel-default
+    button.btn.btn-primary.withoutripple.customizer-toggler
+        i.fa.fa-cog
+    .panel-heading Preferences
+    .panel-body.panel-form-container
+        form.form-horizontal
+            each pref in definitions
+                .form-group
+                    if pref.type == 'header'
+                        .col-xs-6.text-right: h5.mb-n= pref.title
+                    if pref.type == 'boolean'
+                        label.col-xs-6.fs-10.control-label(for='pref_' + pref.name)= pref.title
+                        .col-xs-6
+                            input.switch(type='checkbox', data-preference=pref, name='pref_' + pref.name, id='pref_' + pref.name, checked=prefs[pref.name], data-size='mini')

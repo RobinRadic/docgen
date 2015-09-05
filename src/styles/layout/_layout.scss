@@ -1,0 +1,13 @@
+@import "../base";
+@import 'print';
+@import 'header';
+@import 'page-container';
+@import 'sidebar';
+@import 'content';
+@import 'footer';
+
+.page-header {
+    .page-logo > .logo-default {
+        margin: 19px 10px 0 10px !important;
+    }
+}

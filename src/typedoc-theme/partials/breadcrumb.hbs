@@ -1,0 +1,10 @@
+{{#if parent}}
+    {{#with parent}}{{> breadcrumb}}{{/with}}
+    <li> <a href="{{#if url}}{{relativeURL url}}{{else}}javascript:;{{/if}}">{{name}}</a>  <i class="fa fa-arrow-right"></i> </li>
+{{else}}
+    {{#if url}}
+        <li>
+            <a href="{{relativeURL url}}">Globals</a> <i class="fa fa-arrow-right"></i>
+        </li>
+    {{/if}}
+{{/if}}

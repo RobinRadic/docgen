@@ -1,0 +1,86 @@
+include ../_base
+- var bodyClass = 'page-header-fixed page-sidebar-closed-hide-logo'
+- var sidebarClass = ''
+- var pageHeaderClass = 'navbar-fixed-top';
+- var assetPath = '/assets/';
+- var themeStyle = 'default';
+block vars
+doctype html
+<!--[if IE 8]><html class="ie8" lang="en"><![endif]-->
+<!--[if IE 9]><html lang="en" class="ie9"><![endif]-->
+<!--[if !IE]><!-->
+html(lang="en")
+    <!--<![endif]-->
+    head
+        block head
+            title
+                block title
+                    |  !{typeof config !== 'undefined' ? config.title : 'Default'}
+            block meta
+
+                meta(charset="UTF-8")
+                meta(http-equiv="X-UA-Compatible", content="IE=edge")
+            block styles
+                link(href=assetPath + "styles/stylesheet.css", type="text/css", rel="stylesheet", data-styler="stylesheet")
+                link(href=assetPath + "styles/themes/theme-"+themeStyle+".css", type="text/css", rel="stylesheet", data-styler="theme-default")
+    body.page-loading(class=bodyClass)
+        #page-loader
+            .loader.loader-page
+
+        // #header
+        .page-header.navbar(class=pageHeaderClass)
+            block page-header
+                // .header-inner (#header > .header-inner)
+                .page-header-inner
+                    include ../partials/page-header
+        .clearfix
+
+
+
+        block page-container
+            // #page
+            .page-container
+                // .page-sidebar
+                .page-sidebar-wrapper
+                    // .sidebar
+                    .page-sidebar.navbar-collapse.collapse
+                        block page-sidebar
+                            // .sidebar-menu
+                            ul.page-sidebar-menu(class=sidebarClass, data-keep-expanded="false", data-auto-scroll="true", data-slide-speed="200")
+                                if typeof menu !== 'undefined'
+                                    +sb-recurse(menu.getTree())
+                                else
+                                    include ../partials/sidebar-items
+
+                // .page-content
+                .page-content-wrapper
+                    block page-content-wrapper
+                        // #content
+                        .page-content
+                            // .content-head (#content > .content-head)
+                            .page-head
+                                // .content-title (#content > .content-head > .content-title)
+                                .page-title
+                                    h1
+                                        block page-title
+                            // #content-breadcrumb
+                            ul.page-breadcrumb.breadcrumb
+                                block breadcrumb
+                            .page-content-seperator
+                            block page-content
+                                // .content-inner (#content -> .content-inner)
+                                .page-content-inner
+                                    block content
+        block page-footer
+            include ../partials/page-footer
+
+        block preferences
+            #customizer-plugin
+
+        block scripts
+            script(src=assetPath + "scripts/vendor.min.js")
+            script(src=assetPath + "scripts/config.js")
+        block init-script
+            script(src=assetPath + "scripts/init.js")
+
+        block script

@@ -1,0 +1,153 @@
+.table {
+
+	&.table-bordered {
+    thead > tr > th {
+  	  border-bottom: 0;
+	  }
+  }
+
+	tr.heading > th {
+  		background-color: #eee !important;
+	}
+
+	td .img-responsive  {
+		width:100%;
+	}
+}
+
+.table-toolbar {
+    margin-bottom: 15px;
+
+    @include clearfix();
+}
+
+.table.table-full-width {
+    width: 100% !important;
+}
+
+.table .btn {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 5px;
+}
+
+.table thead tr th {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.table-codex {
+    margin-bottom: 10px !important;
+}
+
+.table-codex thead {
+    color: #999;
+}
+
+.table-codex thead tr th{
+    background-color: #DDD;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+}
+
+.table-codex div.success,
+.table-codex div.info,
+.table-codex div.important,
+.table-codex div.warning,
+.table-codex div.danger {
+    position: absolute;
+    margin-top:-5px;
+    float: left;
+    width: 2px;
+    height: 30px;
+    margin-right: 20px !important;
+}
+
+.table-codex tr td {
+    border-left-width: 0px;
+}
+
+.table-codex tr td:first-child {
+    border-left-width: 1px !important;
+}
+
+.table-codex tr td.highlight:first-child a {
+    margin-left: 15px;
+}
+
+
+@media (max-width: $screen-xs-max) { /* 767px */
+    .table-codex {
+        tr {
+            > td.highlight:first-child a {
+                margin-left: 8px;
+            }
+        }
+    }
+}
+
+.table.table-codex {
+    //border: 0 !important;
+
+    > thead {
+        > tr {
+            &:hover {
+                > th {
+                    //background: none;
+                }
+            }
+
+            &.uppercase {
+                text-transform: uppercase;
+            }
+
+            > th {
+                font-weight: 400;
+                font-family: $font-family-sub-heading;
+                font-size: 13px;
+                color: darken(#B5BFC4, 5%);
+                border: 0;
+                border-bottom:1px solid #F2F5F8;
+            }
+        }
+    }
+
+    > tbody {
+        > tr {
+            &:last-child {
+                > td {
+                    border: 0;
+                }
+            }
+
+            > td {
+                border: 0;
+                border-bottom:1px solid #F2F5F8;
+                color: darken(#AAB4BB, 5%);
+                vertical-align: middle;
+
+                &.fit {
+                    width: 1px;
+                    padding-right: 3px;
+                }
+
+                .user-pic {
+                    display: inline-block;
+                    vertical-align: middle;
+                    height: 30px;
+                    @include border-radius(100%);
+                }
+            }
+        }
+    }
+
+    &.table-hover > tbody > tr {
+        > td:hover,
+        > th:hover,
+        &:hover > td,
+        &:hover > th {
+            background: lighten(#94A0B2, 34%);
+        }
+    }
+}

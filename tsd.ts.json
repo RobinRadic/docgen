@@ -1,0 +1,54 @@
+{
+    "version": "v4",
+    "repo": "borisyankov/DefinitelyTyped",
+    "ref": "master",
+    "path": "src/ts/types",
+    "bundle": "src/ts/types/tsd.d.ts",
+    "installed": {
+        "spectrum/spectrum.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "jquery/jquery.d.ts": {
+            "commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
+        },
+        "tinycolor/tinycolor.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "ace/ace.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "async/async.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "jquery.slimScroll/jquery.slimScroll.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "x-editable/x-editable.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "bootstrap/bootstrap.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "requirejs/require.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "es6-promise/es6-promise.d.ts": {
+            "commit": "8ebc099072402b1a80d205c3eece59bed963ad87"
+        },
+        "rx/rx.d.ts": {
+            "commit": "8ebc099072402b1a80d205c3eece59bed963ad87"
+        },
+        "rx/rx-lite.d.ts": {
+            "commit": "8ebc099072402b1a80d205c3eece59bed963ad87"
+        },
+        "angular2/angular2.d.ts": {
+            "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+        },
+        "angular2/router.d.ts": {
+            "commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+        },
+        "systemjs/systemjs.d.ts": {
+            "commit": "bd03c6ea51abde7d13e354908716c6373fc38b1f"
+        }
+    }
+}

@@ -1,0 +1,54 @@
+{
+    "version": "v4",
+    "repo": "borisyankov/DefinitelyTyped",
+    "ref": "master",
+    "path": "src/lib/types",
+    "bundle": "src/lib/types/tsd.d.ts",
+    "installed": {
+        "mime/mime.d.ts": {
+            "commit": "8efeb01304406a7ef0b49e449630e1bfaefe52ba"
+        },
+        "serve-static/serve-static.d.ts": {
+            "commit": "8efeb01304406a7ef0b49e449630e1bfaefe52ba"
+        },
+        "express/express.d.ts": {
+            "commit": "8efeb01304406a7ef0b49e449630e1bfaefe52ba"
+        },
+        "node-sass/node-sass.d.ts": {
+            "commit": "8efeb01304406a7ef0b49e449630e1bfaefe52ba"
+        },
+        "fs-extra/fs-extra.d.ts": {
+            "commit": "8efeb01304406a7ef0b49e449630e1bfaefe52ba"
+        },
+        "body-parser/body-parser.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "multer/multer.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "node/node.d.ts": {
+            "commit": "0a51ae619b1729429892d1d0d25ec4476f88cad2"
+        },
+        "js-yaml/js-yaml.d.ts": {
+            "commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
+        },
+        "marked/marked.d.ts": {
+            "commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
+        },
+        "jquery/jquery.d.ts": {
+            "commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
+        },
+        "gruntjs/gruntjs.d.ts": {
+            "commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
+        },
+        "handlebars/handlebars.d.ts": {
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
+        },
+        "minimatch/minimatch.d.ts": {
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
+        },
+        "q/Q.d.ts": {
+            "commit": "d9fea91e842c2cf5bd0f7d861ac378e571d2ad7c"
+        }
+    }
+}

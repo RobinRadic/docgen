@@ -1,0 +1,17 @@
+@import "../base";
+
+$bg-color:                      material-color('light-blue', '100') ;
+//$bg:                            $bg-color;
+$header-bg-color:               material-color('teal', '600');
+//$header-bg:                     $header-bg-color !default;
+$content-wrapper-bg-color:      material-color('indigo', '50');
+//$content-wrapper-bg:            $content-wrapper-bg-color !default;
+$content-bg-color:              material-color('grey', '50');
+//$content-bg:                    $content-bg-color !default;
+$sidebar-bg-color: $content-wrapper-bg-color;
+
+@import "../theme-variables";
+
+@import "layout";
+
+@import "component-tables";

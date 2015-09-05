@@ -1,0 +1,54 @@
+mixin sb-item(title, href, icon, hasChildren)
+    - href = href || '#';
+    li&attributes(attributes)
+        a(href=href)
+            if icon
+                i(class=icon)
+            span.title= title
+            if hasChildren
+                span.arrow
+        block
+
+mixin sb-submenu()
+    ul.sub-menu&attributes(attributes)
+        block
+
+mixin sb-recurse(items, level)
+    - level = typeof level !== 'undefined' ? level : 0
+    each item, i in items
+        - var hasChildren = (typeof item.children !== 'undefined' && item.children.length > 0);
+        +sb-item(item.name, item.href, item.icon, hasChildren)
+            if hasChildren
+                +sb-submenu
+                    +sb-recurse(item.children, level++)
+
+
+
+mixin lia(href)
+    - href = href || '#';
+    li: a(href=href)
+        block
+
+mixin dropdown-button(text, color, size, caret)
+    - caret = caret || false
+    - color = color || 'btn-primary';
+    - size = size || 'xs';
+    .btn-group
+        a.btn.dropdown-toggle(href='javscript:;', type='button', data-toggle='dropdown', aria-expanded='false', class=color + ' btn-' + size)
+            | #{text}&nbsp;
+            if caret == true
+                span.caret
+        +dropdown-menu&attributes(attributes)
+            block
+
+mixin breadcrumb(link, last)
+    - last = last || false;
+    - link = link || 'javascript:;'
+    li
+        a(href=link)
+            block
+        if last == false
+            i.fa.fa-arrow-right
+
+mixin _dump(val)
+    pre: code=_inspect(val, { colors: false, hidden: true })

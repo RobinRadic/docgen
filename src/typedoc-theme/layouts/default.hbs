@@ -1,0 +1,31 @@
+
+{{> header}}
+
+<div class="page-content-inner">
+    <div class="row">
+        <div class="col-xs-8 col-content">
+            {{{contents}}}
+        </div>
+        <div class="col-xs-4 col-menu menu-sticky-wrap menu-highlight">
+            <nav class="tsd-navigation primary">
+                <ul>
+                    {{#each navigation.children}}
+                        {{> navigation}}
+                    {{/each}}
+                </ul>
+            </nav>
+
+            <nav class="tsd-navigation secondary menu-sticky">
+                <ul class="before-current">
+                    {{#each toc.children}}
+                        {{> toc.root}}
+                    {{/each}}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    {{> footer}}
+</div>
+
+<div class="overlay"></div>
