@@ -13,16 +13,26 @@ import {Generator} from './../generator'
 import {startServer,startWatchers} from './../modules/server';
 
 
+function addGlobals(argv:yargs.Argv){
+    argv
+        .version(docgen.VERSION)
+        .wrap(yargs.terminalWidth() / 100 * 80)
+        // OPTIONS
+        .config('c').describe('c', 'Define custom docgen.json path')
+        .boolean('D').alias('D', 'dev').describe('D', 'Enable dev mode, you should not use this.')
+        .boolean('q').alias('q', 'quiet')
+        .count('verbose').alias('v', 'verbose').describe('v', 'Set log verbosity level (-v = info, -vv = warnings, -vvv = debug )')
+        .help('help').alias('h', 'help');
+    return argv;
+}
+
 var argv:any = yargs
     .usage('$0 <command> [options] \n$0 help <command>')
-    .version(docgen.VERSION)
-    .wrap(yargs.terminalWidth() / 100 * 80)
-
     // COMMANDS
     .command('init', '  Initialise in this project. Creates a docgen.json file.')
     .command('generate', chalk.yellow('H') + ' Generate documentation.',
     function (yargs:yargs.Argv) {
-        argv = yargs
+        argv = addGlobals(yargs)
             .usage('$0 generate <command> [options]')
             .command('theme', 'Only generate the theme')
             .command('documents', 'Only generate documents')
@@ -30,27 +40,18 @@ var argv:any = yargs
             .command('typedoc', 'Only generate typescript docs')
             .command('index', 'Only generate the index page')
             .option('clean', {type: 'boolean', describe: 'Clean/remove destination first'})
-            .help('help').alias('h', 'help')
-            .count('verbose').alias('v', 'verbose').describe('v', 'Set log verbosity level (-v = info, -vv = warnings, -vvv = debug )')
             .argv
 
     })
     .command('watch', '  Start file watchers')
     .command('serve', chalk.yellow('H') + ' Start a static server to preview the output and start file watchers',
     function (yargs:yargs.Argv) {
-        argv = yargs
+        argv = addGlobals(yargs)
             .usage('$0 serve [--watch]')
             .option('watch', {alias: 'w', type: 'boolean', describe: 'Also start file watchers'})
-            .help('help').alias('h', 'help')
             .argv
     })
 
-    // OPTIONS
-    .config('c').describe('c', 'Define custom docgen.json path').alias('c', 'config')
-    .boolean('D').alias('D', 'dev').describe('D', 'Enable dev mode, you should not use this.')
-    .boolean('q').alias('q', 'quiet')
-    .count('verbose').alias('v', 'verbose').describe('v', 'Set log verbosity level (-v = info, -vv = warnings, -vvv = debug )')
-    .help('help').alias('h', 'help')
 
     // EXAMPLES
     .example('$0 help generate', 'Show help for the generate command, shows all sub-commands and options too')
@@ -119,8 +120,9 @@ if (argv.c) {
 
 var watchers:string[] = ['docs', 'config'];
 if (argv.dev) {
-    watchers.concat(['dev_views', 'dev_sassdoc', 'dev_assets', 'dev_bower']);
+    watchers = watchers.concat(['dev_views', 'dev_sassdoc', 'dev_assets', 'dev_bower']);
 }
+
 var gen:Generator = new Generator();
 
 switch (command) {
