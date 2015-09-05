@@ -1,13 +1,15 @@
 {
     "name": "doc-gen",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "",
     "main": "lib/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "echo \"Starting build\" && rm -rf bower_components node_modules && npm install && bower install && grunt build"
     },
-    "bin": {"docgen": "lib/bin/docgen.js"},
+    "bin": {
+        "docgen": "lib/bin/docgen.js"
+    },
     "author": "Robin Radic",
     "license": "MIT",
     "keywords": [
