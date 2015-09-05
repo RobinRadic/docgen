@@ -3,7 +3,7 @@
     "copyright": "Copyright 2015 &copy; Docgen",
     "docs": "docs",
     "dest": "gh-pages",
-    "baseUrl": "/",
+    "baseUrl": "http://robin.radic.nl/docgen",
     "index": "README.md",
     "generators": {
         "typedoc": {
