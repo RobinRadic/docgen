@@ -100,11 +100,11 @@ module.exports = function (_grunt) {
         subgrunt  : {typescript: {'src/clones/grunt-typescript': ['build']}},
         typescript: {
             options  : {target: 'es5', rootDir: 'src', module: 'amd', sourceMap: false, declaration: false},
-            lib      : {src: ['src/lib/**/*.ts', '!src/lib/**/*.d.ts'], dest: 'lib', options: {module: 'commonjs', sourceMap: true, rootDir: 'src/lib'}},
-            watch_lib: {src: ['src/lib/**/*.ts', '!src/lib/**/*.d.ts'], dest: 'lib', options: {module: 'commonjs', sourceMap: true, rootDir: 'src/lib', watch: {path: 'src/lib'}}},
+            lib      : {src: ['src/lib/**/*.ts', '!src/lib/**/*.d.ts'], dest: 'lib', options: {module: 'commonjs', sourceMap: target === 'demo', rootDir: 'src/lib'}},
+            watch_lib: {src: ['src/lib/**/*.ts', '!src/lib/**/*.d.ts'], dest: 'lib', options: {module: 'commonjs', sourceMap: target === 'demo', rootDir: 'src/lib', watch: {path: 'src/lib'}}},
             //base      : {src: ['src/ts/*.ts', '!src/ts/**/*.d.ts', '!src/ts/app/**/*'], dest: '<%= target.dest %>/assets/scripts', options: {rootDir: 'src/ts'}},
             //watch_base: {src: ['src/ts/*.ts', '!src/ts/**/*.d.ts', '!src/ts/app/**/*'], dest: '<%= target.dest %>/assets/scripts', options: {rootDir: 'src/ts', watch: {path: 'src/ts'}}},
-            tasks    : {src: ['src/tasks/*.ts', '!src/tasks/**/*.d.ts'], dest: 'src', options: {module: 'commonjs', sourceMap: true}}
+            tasks    : {src: ['src/tasks/*.ts', '!src/tasks/**/*.d.ts'], dest: 'src', options: {module: 'commonjs', sourceMap: target === 'demo'}}
         },
         ts        : {
             options: {

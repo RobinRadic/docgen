@@ -1,31 +1,39 @@
-#### Getting started
+Docgen
+==============
 
-1. Ensure you have the required software
-`nodejs & npm`
+Static documentation generator for typescript, sass/scss & javascript packages.
 
+[View the Docgen site for a preview](http://robin.radic.nl/docgen)
 
-2. Clone the repository and change directory
+1. Installation
 ```sh
-git clone https://github.com/packadic/framework packadic-framework
-cd packadic-framework
+npm install -g doc-gen
 ```
 
-3. Install all dependencies
+2. Initialisation
+Inside the project directory for the project you want to generate documentation run the `init` command.
+This will create a `docgen.json` configuration file.
 ```sh
-npm install -g bower            # Installs Bower globally
-npm install -g grunt-cli        # Installs Grunt globally
-npm install -g tsd              # Installs tsd globally
-npm install                     # Installs Node dependencies localy
-bower install                   # Installs Bower components localy
-bash run tsd install            # Installs shared Typescript definitions localy
-bash run tsd ts install         # Installs browser Typescript definitions localy
-bash run tsd lib install        # Installs node Typescript definitions localy
+docgen init
 ```
 
-4. Use grunt to build what you need
+3. Generating the static site
+Once you've edited `docgen.json` you can generate the site and start a local server to preview it.
 ```sh
-grunt               # lists a selection of usefull tasks
-grunt demo          # Build the demo
-grunt dist          # Build the distribution version. Minified and optimized.
-grunt serve         # Builds the demo, starts a local server and watches files for changes. 
+docgen generate
+docgen serve --watch
 ```
+
+4. Command line help
+```sh
+docgen -h
+docgen help <command>
+```
+
+
+### Copyright/License
+Copyright 2015 [Robin Radic](https://github.com/RobinRadic) - [MIT Licensed](http://radic.mit-license.org) 
+ 
+ 
+ 
+ 
