@@ -3,7 +3,7 @@ Docgen
 
 Static documentation generator for typescript, sass/scss & javascript packages.
 
-[View the Docgen site for a preview](http://robin.radic.nl/docgen)
+[Documentation & Demonstration](http://robin.radic.nl/docgen)
 
 1. Installation
 ```sh
