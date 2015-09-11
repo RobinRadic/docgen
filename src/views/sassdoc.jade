@@ -1,6 +1,5 @@
 extends layouts/default
 block vars
-    - assetPath = config.baseUrl + 'assets/';
     - bodyClass += ' page-sidebar-closed page-sassdoc';
     - sidebarClass += ' page-sidebar-menu-closed';
 block append styles
@@ -10,9 +9,6 @@ block page-content-wrapper
     .page-content
         .row!= sassdoc.content
 
-block prepend init-script
-    script.
-        packadicConfig.requirejs.baseUrl = '!{assetPath}scripts/';
 block append init-script
     script.
         require(['fuse', 'highlightjs', 'sassdoc/main', 'sassdoc/search','sassdoc/sidebar' ], function(fuse, hljs, App, Search, Sidebar){

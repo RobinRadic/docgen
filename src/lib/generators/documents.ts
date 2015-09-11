@@ -87,13 +87,17 @@ export class Document {
         var self:Document = this;
         var doc:any = {};
         var raw:string = fse.readFileSync(docsPath(this.filePath), 'utf-8');
+        var rootPath:string = path.relative(path.dirname(this.fileDestPath), destPath()); // + path.sep;
+        rootPath = rootPath.length > 0 ? rootPath + '/' : '';
+
         doc = _.merge(config('types.doc'), parseFM(raw));
         doc.content = parse(raw, true);
         doc.menuItem = this.generator.menu.find({type: 'doc', doc: this.filePath});
 
         var html:string = this.generator.compileView(doc.view, {
             menu: this.generator.menu,
-            doc: doc
+            doc: doc,
+            rootPath: rootPath
         });
 
 

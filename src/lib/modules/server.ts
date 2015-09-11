@@ -79,7 +79,7 @@ function gen():Generator {
 }
 
 addWatcher('dev_views', [ rootPath('src/views/**/*.jade') ], function(filePath:string, event:any, fileName:any, w:any){
-    gen().documents.generateAll(); LOG.ok('Regenerated all documents');
+    gen().createIndex().documents.generateAll(); LOG.ok('Regenerated all documents');
 });
 
 addWatcher('dev_sassdoc', [ rootPath('src/views/sassdoc.jade'), rootPath('src/sassdoc-theme/views/**/*.swig') ], function(filePath:string, event:any, fileName:any, w:any){
@@ -98,7 +98,7 @@ addWatcher('dev_bower', [ rootPath('bower_components/*') ], function(){
 });
 
 addWatcher('docs', [ docsPath('**/*.md') ], function(filePath:string, event:any, fileName:any, w:any){
-    gen().documents.create(fileName); LOG.ok('Regenerated document ' + fileName);
+    gen().createIndex().documents.create(fileName); LOG.ok('Regenerated document ' + fileName);
 });
 
 addWatcher('config', [ destPath('docgen.json') ], function(filePath:string, event:any, fileName:any, w:any){

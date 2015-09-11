@@ -74,11 +74,14 @@ export class Sassdoc  {
         var template:any = this.generator.compileView('sassdoc');
         var glob:string = path.join(item.options.dest, '**/*.html');
         globule.find(glob).forEach(function(filePath:string){
+            var rootPath:string = path.relative(path.dirname(filePath), destPath());
+            rootPath = rootPath.length > 0 ? rootPath + '/' : '';
             var fileContent:string = fse.readFileSync(filePath, 'utf-8');
             var html:string = template({
                 sassdoc: {
                     content: fileContent
-                }
+                },
+                rootPath: rootPath
             });
             LOG.debug('writing sassoc file ' + filePath);
             fse.writeFileSync(filePath, html);

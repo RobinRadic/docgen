@@ -2,7 +2,8 @@ include ../_base
 - var bodyClass = 'page-header-fixed page-sidebar-closed-hide-logo'
 - var sidebarClass = ''
 - var pageHeaderClass = 'navbar-fixed-top';
-- var assetPath = '/assets/';
+- rootPath = rootPath || '';
+- var assetPath = rootPath + 'assets/';
 - var themeStyle = 'default';
 block vars
 doctype html
@@ -81,6 +82,8 @@ html(lang="en")
             script(src=assetPath + "scripts/vendor.min.js")
             script(src=assetPath + "scripts/config.js")
         block init-script
+            script.
+                packadicConfig.requirejs.baseUrl = '!{assetPath}scripts/';
             script(src=assetPath + "scripts/init.js")
 
         block script

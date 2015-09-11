@@ -3,7 +3,7 @@
     "copyright": "Copyright 2015 &copy; Docgen",
     "docs": "docs",
     "dest": "gh-pages",
-    "baseUrl": "http://robin.radic.nl/docgen",
+    "baseUrl": "/docgen/",
     "index": "README.md",
     "generators": {
         "typedoc": {
@@ -85,6 +85,20 @@
                 }
             ]
         },
+        {
+            "name": "CLI",
+            "type": "parent",
+            "icon": "fa fa-terminal",
+            "children": [
+                {
+                    "name": "Commands",
+                    "doc": "cli/commands.md",
+                    "type": "doc",
+                    "icon": "fa fa-terminal"
+                }
+            ]
+        },
+
         {
             "name": "Github",
             "href": "https://github.com/robinradic/docgen",

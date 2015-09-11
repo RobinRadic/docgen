@@ -13,7 +13,7 @@ import cp = require('child_process');
 import q = require('q');
 import jade = require('jade');
 
-import {config,paths,rootPath,destPath,docsPath} from "./index";
+import {config,paths,rootPath,destPath,docsPath,relPathToDestRoot} from "./index";
 import {LOG} from "./cli";
 import {kindOf,treeify} from "./modules/utilities";
 import {parse,getRawFM,parseFM,removeFM} from './modules/markdown';
@@ -96,6 +96,7 @@ export class Generator {
         indexDoc.create();
         return this;
     }
+
 }
 
 export interface MenuItem {
@@ -136,23 +137,25 @@ export class Menu {
         });
     }
 
+
     resolveType(item:MenuItem):MenuItem {
         switch (item.type) {
             case "doc":
                 var filePath:string = path.basename(item.doc, path.extname(item.doc));
-                item.href = path.join(config('baseUrl'), path.dirname(item.doc), filePath + '.html');
+                var docPath:string = path.join(path.dirname(item.doc), filePath + '.html');
+                item.href = docPath;
                 break;
             case 'index':
-                item.href = path.join(config('baseUrl'), 'index.html');
+                item.href = 'index.html';
                 break;
             case "parent":
                 item.href = 'javascript:;';
                 break;
             case "sassdoc":
-                item.href = path.join(config('baseUrl'), 'sassdoc', item.sassdoc);
+                item.href = path.join('sassdoc', item.sassdoc, 'index.html');
                 break;
             case "typedoc":
-                item.href = path.join(config('baseUrl'), 'typedoc', item.typedoc);
+                item.href = path.join('typedoc', item.typedoc, 'index.html');
                 break;
         }
         return item;

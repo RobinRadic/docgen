@@ -139,7 +139,7 @@ switch (command) {
 
             LOG.ok('Generating files.');
 
-            gen.clean().createIndex()
+            gen.createIndex()
                 .theme.createAssets()
                 .documents.generateAll()
                 .sassdoc.generateAll()
@@ -154,7 +154,8 @@ switch (command) {
             } else if (nested === 'documents') {
 
                 LOG.ok('Generating documents');
-                gen.documents.generateAll();
+                gen.createIndex()
+                    .documents.generateAll();
 
             } else if (nested === 'sassdoc') {
 

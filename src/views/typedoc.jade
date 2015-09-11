@@ -1,13 +1,7 @@
 extends layouts/default
-block vars
-    - assetPath = config.baseUrl + 'assets/';
 
 block append styles
     link(href=assetPath + "styles/typedoc/main.css", type="text/css", rel="stylesheet", data-styler="stylesheet")
 
 block page-content-wrapper
     .page-content!= typedoc.content
-
-block prepend init-script
-    script.
-        packadicConfig.requirejs.baseUrl = '!{assetPath}scripts/';

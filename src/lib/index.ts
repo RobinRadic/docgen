@@ -102,6 +102,11 @@ export function cwdPath(relPath:string=''):string {
     console.log(paths);
     return path.join(paths.cwd, relPath);
 }
+export function relPathToDestRoot(dir:string){
+    var rootPath:string = path.relative(dir, destPath());
+    rootPath = rootPath.length > 0 ? rootPath + '/' : '';
+    return rootPath;
+}
 
 export function createConfigFile(filePath:string) {
     fse.outputFileSync(filePath, JSON.stringify(getInitConfig(), null, 4));

@@ -45,11 +45,14 @@ export class Typedoc  {
         //LOG.debug('transformGenerated:glob', glob);
         globule.find(glob).forEach(function(filePath:string){
             //LOG.debug('transformGenerated:forEach', filePath);
+            var rootPath:string = path.relative(path.dirname(filePath), destPath());
+            rootPath = rootPath.length > 0 ? rootPath + '/' : '';
             var fileContent:string = fse.readFileSync(filePath, 'utf-8');
             var html:string = template({
                 typedoc: {
                     content: fileContent
-                }
+                },
+                rootPath: rootPath
             });
             fse.writeFileSync(filePath, html);
         });
