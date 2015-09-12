@@ -2,10 +2,13 @@ extends layouts/default
 
 block page-title
     | !{doc.title}
+    if doc.subtitle
+        small.pl=doc.subtitle
 
 block breadcrumb
     +breadcrumb(rootPath + 'index.html', true) Home
 
-block content
-    .row
-        .col-md-12!= doc.content
+block page-content
+    .page-content-inner.mt-n
+        .row
+            .col-md-12!= doc.content

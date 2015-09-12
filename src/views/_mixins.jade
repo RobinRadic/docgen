@@ -16,13 +16,16 @@ mixin sb-submenu()
 mixin sb-recurse(items, level)
     - level = typeof level !== 'undefined' ? level : 0
     each item, i in items
-        - var hasChildren = (typeof item.children !== 'undefined' && item.children.length > 0);
-        - var href = item.href;
-        - if(item.type != 'parent' && item.type != 'href') href = rootPath + href;
-        +sb-item(item.name, href, item.icon, hasChildren)
-            if hasChildren
-                +sb-submenu
-                    +sb-recurse(item.children, level++)
+        if item.type == 'heading'
+            li.heading: h3= item.name
+        else
+            - var hasChildren = (typeof item.children !== 'undefined' && item.children.length > 0);
+            - var href = item.href;
+            - if(item.type != 'parent' && item.type != 'href') href = rootPath + href;
+            +sb-item(item.name, href, item.icon, hasChildren)
+                if hasChildren
+                    +sb-submenu
+                        +sb-recurse(item.children, level++)
 
 
 

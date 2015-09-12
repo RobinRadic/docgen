@@ -34,12 +34,16 @@ export class Generator {
     private _sassdoc:Sassdoc;
 
     constructor() {
-        this._menu = new Menu(config('menu'));
+        this.loadMenu(config('menu'));
         this._documents = new DocumentCollection(this);
         this._theme = new Theme(this);
         this._typedoc = new Typedoc(this);
         this._sassdoc = new Sassdoc(this);
         this._logoSvg = fse.readFileSync(rootPath(path.join('src', 'images', 'logo-srco.svg')), 'utf-8');
+    }
+
+    public loadMenu(menuItems:any){
+        this._menu = new Menu(menuItems);
     }
 
     public clean():Generator {
@@ -132,7 +136,7 @@ export class Menu {
                 item.parentId = parentId;
                 item.id = [parentId, item.name].join('||');
             }
-            if (kindOf(item.children) !== 'undefined') {
+            if (item.type == 'parent' && kindOf(item.children) !== 'undefined') {
                 self.process(item.children, item.id);
                 delete item.children;
             }
@@ -160,6 +164,8 @@ export class Menu {
             case "typedoc":
                 item.href = path.join('typedoc', item.typedoc, 'index.html');
                 break;
+            case "heading":
+                item.href = "";
         }
         return item;
     }

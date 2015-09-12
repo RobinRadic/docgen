@@ -98,6 +98,7 @@ html(lang="en")
                 packadicConfig.app.name = '!{config.title}';
                 packadicConfig.paths.assets = '!{assetPath}';
                 packadicConfig.docgen = !{JSON.stringify(config)};
+                packadicConfig.docgen.menuTree = !{JSON.stringify(menu.getTree())};
             script(src=assetPath + "scripts/init.js")
 
         block script

@@ -98,10 +98,12 @@ addWatcher('dev_bower', [ rootPath('bower_components/*') ], function(){
 });
 
 addWatcher('docs', [ docsPath('**/*.md') ], function(filePath:string, event:any, fileName:any, w:any){
-    gen().createIndex().documents.create(fileName); LOG.ok('Regenerated document ' + fileName);
+    var relFilePath:string = path.relative(docsPath(), filePath);
+    LOG.ok('Regenerating document.'); LOG.debug('Filename:', fileName); LOG.debug('filePath:', filePath); LOG.debug('relFilePath:', relFilePath);
+    gen().createIndex().documents.create(relFilePath);
 });
 
 addWatcher('config', [ destPath('docgen.json') ], function(filePath:string, event:any, fileName:any, w:any){
-    loadConfigFile(filePath); LOG.ok('Reloaded config file');
+    loadConfigFile(filePath); gen().createIndex().documents.generateAll(); LOG.ok('Reloaded config file and regenerated documents');
 });
 
