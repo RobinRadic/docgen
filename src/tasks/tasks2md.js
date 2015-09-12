@@ -12,4 +12,3 @@ module.exports = function (grunt) {
         });
     });
 };
-//# sourceMappingURL=tasks2md.js.map

@@ -182,13 +182,13 @@ module.exports = function (_grunt) {
         // compile
         ['styles', 'Compile all SCSS stylesheets', ['clean:styles', 'sass:styles']],
         ['scripts', 'Concat & uglify vendor scripts and compile typescript files',
-            ['clean:scripts', 'uglify:vendor', 'jade:templates', 'ts:base', 'typescript:lib', 'copy:js', 'typescript:tasks']
+            ['clean:scripts', 'uglify:vendor', 'jade:templates', 'ts:base', 'typescript:lib', 'copy:js', 'typescript:tasks', 'shebangify']
         ],
         ['views', 'Compile the jade view', ['clean:views', 'jade:' + target.name]],
         // build
         ['docs', 'Generate the docs', ['clean:docs', 'sassdoc:styles', 'typedoc:lib', 'typedoc:ts']],
         ['demo', 'Build the theme', ['clean:all', 'bower', 'images', 'styles', 'scripts', 'views', 'docs']],
-        ['dist', 'Build the distribution version (optimized)', ['clean:all', 'bower', 'styles', 'scripts', 'images', 'views']],
+        ['dist', 'Build the distribution version (optimized)', ['clean:all', 'bower', 'styles', 'scripts', 'images']],
         // dev
         ['lib', 'Compile typescript files in lib for node.', ['typescript:lib']],
         ['watch', 'Watch for file changes and fire tasks.', ['concurrent:watch']],
