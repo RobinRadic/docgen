@@ -1,6 +1,6 @@
 {
   "name": "doc-gen",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "body-parser": {
       "version": "1.13.3",
