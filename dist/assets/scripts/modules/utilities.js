@@ -41,6 +41,10 @@
         return '' + object;
     }
     exports.makeString = makeString;
+    function strEndsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+    exports.strEndsWith = strEndsWith;
     function escapeRegExp(str) {
         return makeString(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
     }

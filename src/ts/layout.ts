@@ -492,9 +492,10 @@ export class Layout extends BaseApp {
             if (!_.isString(href)) {
                 return;
             }
-            href = util.trim(href).replace(location['origin'], '');
+            href = util.trim(href).replace(location['origin'], '').replace(/\.\.\//g, '')
             var path = util.trim(href, '/');
-            if (path == currentPath) {
+            debug.log(path, currentPath, href);
+            if (path == currentPath) { //util.strEndsWith(path, currentPath)
                 debug.log('Resolved active sidebar link', this);
                 var $el = $(this);
                 $el.parent('li').not('.active').addClass('active');

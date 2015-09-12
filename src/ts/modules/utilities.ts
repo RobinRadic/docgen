@@ -63,6 +63,16 @@ export function makeString(object) {
 }
 
 /**
+ * ends with
+ * @param str
+ * @param suffix
+ * @returns {boolean}
+ */
+export function strEndsWith(str:string, suffix:string):boolean {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+/**
  * Escape a regexp str
  * @param str
  * @returns {*|any|string|void}

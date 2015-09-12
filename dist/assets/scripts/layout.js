@@ -406,8 +406,9 @@ var __extends = (this && this.__extends) || function (d, b) {
                 if (!_.isString(href)) {
                     return;
                 }
-                href = util.trim(href).replace(location['origin'], '');
+                href = util.trim(href).replace(location['origin'], '').replace(/\.\.\//g, '');
                 var path = util.trim(href, '/');
+                debug_1.debug.log(path, currentPath, href);
                 if (path == currentPath) {
                     debug_1.debug.log('Resolved active sidebar link', this);
                     var $el = $(this);
