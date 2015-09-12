@@ -397,10 +397,6 @@ var __extends = (this && this.__extends) || function (d, b) {
             if (this.config('app.sidebar.resolveActive') !== true)
                 return;
             var currentPath = util.trim(location.pathname.toLowerCase(), '/');
-            if (location['hostname'] !== 'localhost') {
-                currentPath = util.trim(this.config('docgen.baseUrl') + currentPath, '/');
-                ;
-            }
             var md = this.p.getBreakpoint('md');
             if (this.p.getViewPort().width < md) {
                 return;
@@ -410,7 +406,12 @@ var __extends = (this && this.__extends) || function (d, b) {
                 if (!_.isString(href)) {
                     return;
                 }
-                href = util.trim(href).replace(location['origin'], '').replace(/\.\.\//g, '');
+                href = util.trim(href)
+                    .replace(location['origin'], '')
+                    .replace(/\.\.\//g, '');
+                if (location['hostname'] !== 'localhost') {
+                    href = this.config('docgen.baseUrl') + currentPath;
+                }
                 var path = util.trim(href, '/');
                 debug_1.debug.log(path, currentPath, href);
                 if (path == currentPath) {
