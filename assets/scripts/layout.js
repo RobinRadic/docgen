@@ -411,7 +411,7 @@ var __extends = (this && this.__extends) || function (d, b) {
                     .replace(location['origin'], '')
                     .replace(/\.\.\//g, '');
                 if (location['hostname'] !== 'localhost') {
-                    href = self.config('docgen.baseUrl') + currentPath;
+                    href = self.config('docgen.baseUrl') + href;
                 }
                 var path = util.trim(href, '/');
                 debug_1.debug.log(path, currentPath, href);
