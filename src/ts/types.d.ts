@@ -138,3 +138,8 @@ declare module 'templates/styler' {
 declare module 'templates/customizer' {
     export = jadeTemplate;
 }
+
+
+declare module 'svg' {
+    export = SVG;
+}

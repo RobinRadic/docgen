@@ -20,6 +20,11 @@ export var VERSION:string = require('./../package.json').version;
 export function getDefaultConfig() {
     return {
         title: 'Documentation for my project',
+        logo: {
+            text: 'Documentation',
+            size: 25,
+            x: 0, y:0
+        },
         copyright: 'Copyright 2015 &copy; Docgen',
         docs: 'docs',
         dest: 'gh-pages',

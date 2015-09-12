@@ -10,13 +10,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     else if (typeof define === 'function' && define.amd) {
         define(deps, factory);
     }
-})(["require", "exports", 'jquery', 'async', './BaseApp', './modules/utilities', './modules/configuration', './modules/storage', './modules/debug'], function (require, exports) {
+})(["require", "exports", 'jquery', 'async', './BaseApp', './modules/utilities', './modules/configuration', './modules/storage', 'svg', './modules/debug'], function (require, exports) {
     var $ = require('jquery');
     var async = require('async');
     var BaseApp_1 = require('./BaseApp');
     var util = require('./modules/utilities');
     var configuration_1 = require('./modules/configuration');
     var storage = require('./modules/storage');
+    var svg = require('svg');
     var debug_1 = require('./modules/debug');
     var log = debug_1.debug.log;
     var $window = $(window), $document = $(document), $body = $('body'), $header = $.noop(), $headerInner = $.noop(), $container = $.noop(), $content = $.noop(), $sidebar = $.noop(), $sidebarMenu = $.noop(), $search = $.noop(), $footer = $.noop();
@@ -36,6 +37,7 @@ var __extends = (this && this.__extends) || function (d, b) {
             _super.apply(this, arguments);
             this.openCloseInProgress = false;
             this.closing = false;
+            this.logo = {};
         }
         Layout.prototype.boot = function () {
             var self = this;
@@ -46,11 +48,40 @@ var __extends = (this && this.__extends) || function (d, b) {
             self._initToggleButton();
             self._initGoTop();
             self._initPreferences();
+            self._initLogo();
             self.sidebarResolveActive();
             self.p.on('resize', function () {
                 self._initFixed();
             });
             self.fixBreadcrumb();
+        };
+        Layout.prototype.setLogoText = function (logoText) {
+            window['SVG'] = svg;
+            var logo = svg('logo');
+            logo.clear();
+            logo.size(200, 50)
+                .viewbox(0, 0, 200, 50)
+                .attr('preserveAspectRatio', 'xMidYMid meet');
+            var text = logo.text(logoText);
+            var image = logo.image('http://svgjs.com//images/shade.jpg');
+            text.attr('dy', '.3em')
+                .font({
+                family: 'Purisa, Source Code Pro',
+                anchor: 'start',
+                size: this.config('docgen.logo.size'),
+                leading: 1
+            })
+                .x(this.config('docgen.logo.x'))
+                .y(this.config('docgen.logo.y'));
+            image
+                .size(650, 650)
+                .y(-150)
+                .x(-150)
+                .clipWith(text);
+            this.logo = { container: logo, text: text, image: image };
+        };
+        Layout.prototype._initLogo = function () {
+            this.setLogoText(this.config('docgen.logo.text'));
         };
         Layout.prototype._initHeader = function () {
             var self = this;

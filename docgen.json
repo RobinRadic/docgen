@@ -1,10 +1,10 @@
 {
-    "title": "Documentation for my project",
+    "title": "Docgen",
     "copyright": "Copyright 2015 &copy; Docgen",
     "docs": "docs",
     "dest": "gh-pages",
     "baseUrl": "/docgen/",
-    "index": "README.md",
+    "index": "docs/index.md",
     "generators": {
         "typedoc": {
             "node": {

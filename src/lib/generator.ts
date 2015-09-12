@@ -26,6 +26,7 @@ import {Sassdoc} from "./generators/sassdoc";
 
 export class Generator {
 
+    public _logoSvg:string;
     private _menu:Menu;
     private _documents:DocumentCollection;
     private _theme:Theme;
@@ -38,6 +39,7 @@ export class Generator {
         this._theme = new Theme(this);
         this._typedoc = new Typedoc(this);
         this._sassdoc = new Sassdoc(this);
+        this._logoSvg = fse.readFileSync(rootPath(path.join('src', 'images', 'logo-srco.svg')), 'utf-8');
     }
 
     public clean():Generator {
@@ -79,7 +81,8 @@ export class Generator {
                     return util.inspect(val, {colors: false, hidden: true});
                 },
                 config: config.get(),
-                menu: self.menu
+                menu: self.menu,
+                logoSvg: self._logoSvg
             }, locals));
         };
         if(_.isUndefined(vars)){
@@ -91,7 +94,7 @@ export class Generator {
     }
 
     public createIndex():Generator {
-        var indexDoc:Document = this.documents.make('../README.md');
+        var indexDoc:Document = this.documents.make(path.join('..', config('index')));
         indexDoc.setFileDestPath('index.html');
         indexDoc.create();
         return this;

@@ -7,7 +7,7 @@ import util  = require('./modules/utilities');
 import {DeferredInterface} from './modules/promise';
 import {ConfigObject,IConfig,IConfigProperty} from './modules/configuration';
 import storage  = require('./modules/storage');
-
+import svg = require('svg');
 
 import {debug} from './modules/debug';
 var log:any = debug.log;
@@ -43,6 +43,7 @@ export class Layout extends BaseApp {
 
     public openCloseInProgress:boolean = false;
     public closing:boolean = false;
+    public logo:any = {};
 
     public boot() {
         var self:Layout = this;
@@ -53,12 +54,50 @@ export class Layout extends BaseApp {
         self._initToggleButton();
         self._initGoTop();
         self._initPreferences();
+        self._initLogo();
         self.sidebarResolveActive();
         self.p.on('resize', function(){
             self._initFixed();
-        })
+        });
         self.fixBreadcrumb();
     }
+
+    public setLogoText(logoText:string):any {
+        window['SVG'] = svg;
+        var logo:svgjs.Doc = svg('logo');
+        logo.clear();
+        logo.size(200, 50)
+            .viewbox(0, 0, 200, 50)
+            .attr('preserveAspectRatio', 'xMidYMid meet');
+
+        var text:svgjs.Element = logo.text(logoText);
+        var image:svgjs.Element = logo.image('http://svgjs.com//images/shade.jpg');
+
+        text.attr('dy', '.3em')
+            .font(<any> {
+            family: 'Purisa, Source Code Pro',
+            anchor: 'start',
+            size: this.config('docgen.logo.size'),
+            leading: 1
+        })
+            .x(this.config('docgen.logo.x'))
+            .y(this.config('docgen.logo.y'));
+
+
+        image
+            .size(650, 650)
+            .y(-150)
+            .x(-150)
+            .clipWith(text);
+
+        this.logo = { container: logo, text: text, image:image };
+
+    }
+
+    protected _initLogo(){
+        this.setLogoText(this.config('docgen.logo.text'))
+    }
+
 
     /****************************/
     // Initialisation

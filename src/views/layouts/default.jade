@@ -33,7 +33,12 @@ html(lang="en")
             block page-header
                 // .header-inner (#header > .header-inner)
                 .page-header-inner
-                    include ../partials/page-header
+                    .page-logo.pl.pr-n
+                        .logo-default.logo-image!= logoSvg
+                        .menu-toggler.sidebar-toggler
+
+                    a(href='javascript:;', data-toggle='collapse', data-target='.navbar-collapse').menu-toggler.responsive-toggler
+
         .clearfix
 
 
@@ -73,10 +78,16 @@ html(lang="en")
                                 .page-content-inner
                                     block content
         block page-footer
-            include ../partials/page-footer
+            .page-footer
+                .page-footer-inner
+                    - var year = (new Date()).getFullYear()
+                    | !{config.copyright}
+                .scroll-to-top
+                    i.fa.fa-level-up
 
         block preferences
             #customizer-plugin
+
 
         block scripts
             script(src=assetPath + "scripts/vendor.min.js")
@@ -84,6 +95,9 @@ html(lang="en")
         block init-script
             script.
                 packadicConfig.requirejs.baseUrl = '!{assetPath}scripts/';
+                packadicConfig.app.name = '!{config.title}';
+                packadicConfig.paths.assets = '!{assetPath}';
+                packadicConfig.docgen = !{JSON.stringify(config)};
             script(src=assetPath + "scripts/init.js")
 
         block script

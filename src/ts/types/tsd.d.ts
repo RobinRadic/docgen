@@ -13,3 +13,4 @@
 /// <reference path="systemjs/systemjs.d.ts" />
 /// <reference path="tinycolor/tinycolor.d.ts" />
 /// <reference path="x-editable/x-editable.d.ts" />
+/// <reference path="svgjs/svgjs.d.ts" />

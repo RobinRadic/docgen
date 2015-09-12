@@ -1,12 +1,12 @@
 include ../_base
 .page-logo
-    a(href="#").logo-default
+    a(href="#").logo-default#logo
         img(src=assetPath+"images/codex.png")
     .menu-toggler.sidebar-toggler
 
 a(href='javascript:;', data-toggle='collapse', data-target='.navbar-collapse').menu-toggler.responsive-toggler
 
-.page-actions
+//.page-actions
     .btn-group
         +dropdown-button('Project', undefined, 'sm')
             +lia Themes

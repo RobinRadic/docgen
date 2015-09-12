@@ -12,7 +12,7 @@ var packadicConfig = (function () {
             'material': bowerDir + 'bootstrap-material-design/dist/js/material.min',
             'ripples': bowerDir + 'bootstrap-material-design/dist/js/ripples.min',
 
-            'svg.js': bowerDir + 'svg.js/dist/svg.min',
+            'svg': bowerDir + 'svg.js/dist/svg',
             'backbone': bowerDir + 'backbone/backbone-min',
             'lunr': bowerDir + 'lunr.js/lunr.min',
             'fuse': bowerDir + 'fuse/src/fuse.min',
@@ -35,6 +35,7 @@ var packadicConfig = (function () {
             }
         },
         shim: {
+            'svg': {exports: 'SVG' },
             'app': ['jquery', 'bootstrap', 'material'],
             'jade': {exports: 'jade'},
             'lunr': {exports: 'lunr'},
@@ -70,6 +71,7 @@ var packadicConfig = (function () {
         },
         requirejs: requireJs,
         app: {
+            name: 'DocGen',
             plugins: ['example', 'styler', 'customizer'],
             selectors: {
                 'search': '.sidebar-search',
