@@ -481,6 +481,7 @@ export class Layout extends BaseApp {
     }
 
     protected sidebarResolveActive() {
+        var self:Layout = this;
         if(this.config('app.sidebar.resolveActive') !== true) return;
         var currentPath = util.trim(location.pathname.toLowerCase(), '/');
         var md = this.p.getBreakpoint('md');
@@ -492,9 +493,18 @@ export class Layout extends BaseApp {
             if (!_.isString(href)) {
                 return;
             }
-            href = util.trim(href).replace(location['origin'], '').replace(/\.\.\//g, '')
+
+            href = util.trim(href)
+                .replace(location['origin'], '')
+                .replace(/\.\.\//g, '');
+
+            if(location['hostname'] !== 'localhost'){
+                href = self.config('docgen.baseUrl') + href;
+            }
+
             var path = util.trim(href, '/');
             debug.log(path, currentPath, href);
+
             if (path == currentPath) { //util.strEndsWith(path, currentPath)
                 debug.log('Resolved active sidebar link', this);
                 var $el = $(this);

@@ -18,7 +18,7 @@ mixin sb-recurse(items, level)
     each item, i in items
         - var hasChildren = (typeof item.children !== 'undefined' && item.children.length > 0);
         - var href = item.href;
-        - if(item.type != 'parent' || item.type != 'href') href = rootPath + href;
+        - if(item.type != 'parent' && item.type != 'href') href = rootPath + href;
         +sb-item(item.name, href, item.icon, hasChildren)
             if hasChildren
                 +sb-submenu

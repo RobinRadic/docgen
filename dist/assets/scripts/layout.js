@@ -394,6 +394,7 @@ var __extends = (this && this.__extends) || function (d, b) {
             this.p.emit('sidebar:show');
         };
         Layout.prototype.sidebarResolveActive = function () {
+            var self = this;
             if (this.config('app.sidebar.resolveActive') !== true)
                 return;
             var currentPath = util.trim(location.pathname.toLowerCase(), '/');
@@ -406,7 +407,12 @@ var __extends = (this && this.__extends) || function (d, b) {
                 if (!_.isString(href)) {
                     return;
                 }
-                href = util.trim(href).replace(location['origin'], '').replace(/\.\.\//g, '');
+                href = util.trim(href)
+                    .replace(location['origin'], '')
+                    .replace(/\.\.\//g, '');
+                if (location['hostname'] !== 'localhost') {
+                    href = self.config('docgen.baseUrl') + href;
+                }
                 var path = util.trim(href, '/');
                 debug_1.debug.log(path, currentPath, href);
                 if (path == currentPath) {
