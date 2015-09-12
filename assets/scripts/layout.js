@@ -394,6 +394,7 @@ var __extends = (this && this.__extends) || function (d, b) {
             this.p.emit('sidebar:show');
         };
         Layout.prototype.sidebarResolveActive = function () {
+            var self = this;
             if (this.config('app.sidebar.resolveActive') !== true)
                 return;
             var currentPath = util.trim(location.pathname.toLowerCase(), '/');
@@ -410,7 +411,7 @@ var __extends = (this && this.__extends) || function (d, b) {
                     .replace(location['origin'], '')
                     .replace(/\.\.\//g, '');
                 if (location['hostname'] !== 'localhost') {
-                    href = this.config('docgen.baseUrl') + currentPath;
+                    href = self.config('docgen.baseUrl') + currentPath;
                 }
                 var path = util.trim(href, '/');
                 debug_1.debug.log(path, currentPath, href);
