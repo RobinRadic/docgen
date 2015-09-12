@@ -397,6 +397,10 @@ var __extends = (this && this.__extends) || function (d, b) {
             if (this.config('app.sidebar.resolveActive') !== true)
                 return;
             var currentPath = util.trim(location.pathname.toLowerCase(), '/');
+            if (location['hostname'] !== 'localhost') {
+                currentPath = util.trim(this.config('docgen.baseUrl') + currentPath, '/');
+                ;
+            }
             var md = this.p.getBreakpoint('md');
             if (this.p.getViewPort().width < md) {
                 return;
