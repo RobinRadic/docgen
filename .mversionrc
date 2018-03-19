@@ -2,8 +2,8 @@
     "commitMessage": "Bumped to %s",
     "tagName": "%s",
     "scripts": {
-        "preupdate": "echo 'Bumping version' && git add -A && git commit -m \"autocommit before bumping to version %s\"",
-        "postcommit": "git push && git push --tags && npm publish",
+        "preupdate": "echo 'Bumping version' && git add -A && git commit -m 'autocommit before bumping to version %s'",
+        "postcommit": "echo 'Pushing git' && git push && git push --tags && echo 'Publishing package' && npm publish",
         "postupdate": "echo 'Updated to version %s in manifest files'"
     }
 }
