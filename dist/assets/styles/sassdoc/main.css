@@ -252,9 +252,7 @@
   font-size: 0.9em;
 }
 
-.searchbar__suggestions a:hover,
-.searchbar__suggestions a:active,
-.searchbar__suggestions a:focus {
+.searchbar__suggestions a:hover, .searchbar__suggestions a:active, .searchbar__suggestions a:focus {
   background: #e0e0e0;
 }
 
@@ -347,9 +345,7 @@
   color: #333;
 }
 
-.sidebar__item:hover,
-.sidebar__item:active,
-.sidebar__item:focus {
+.sidebar__item:hover, .sidebar__item:active, .sidebar__item:focus {
   background: #e0e0e0;
 }
 
@@ -451,9 +447,7 @@
   transition: 0.15s ease-out;
 }
 
-.btn-toggle:hover,
-.btn-toggle:active,
-.btn-toggle:focus {
+.btn-toggle:hover, .btn-toggle:active, .btn-toggle:focus {
   background: #dfdfdf;
 }
 
@@ -710,9 +704,7 @@
   transition: 0.2s ease-out;
 }
 
-.item__code--togglable:hover::after,
-.item__code--togglable:active::after,
-.item__code--togglable:focus::after {
+.item__code--togglable:hover::after, .item__code--togglable:active::after, .item__code--togglable:focus::after {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   opacity: 1;
 }

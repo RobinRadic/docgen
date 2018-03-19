@@ -77,7 +77,7 @@ function regExpToObject(re) {
     return {
         expression: string.slice(start+1, flagStart),
         flags: string.slice(flagStart+1)
-    }
+    };
 }
 
 function stringToRegExp(string, flags) {
@@ -92,7 +92,7 @@ function objectToRegExp(obj) {
 
 // iSearch class
 
-;(function() {
+(function() {
 
     this.activate = function(ed, backwards) {
         this.$editor = ed;

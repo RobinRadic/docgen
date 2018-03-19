@@ -48,7 +48,7 @@ var SqlHighlightRules = function() {
 
     var builtinFunctions = (
         "avg|count|first|last|max|min|sum|ucase|lcase|mid|len|round|rank|now|format|" + 
-        "coalesce|ifnull|isnull|nv|"
+        "coalesce|ifnull|isnull|nvl"
     );
 
     var dataTypes = (
@@ -77,6 +77,9 @@ var SqlHighlightRules = function() {
         }, {
             token : "string",           // ' string
             regex : "'.*?'"
+        }, {
+            token : "string",           // ` string (apache drill)
+            regex : "`.*?`"
         }, {
             token : "constant.numeric", // float
             regex : "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"

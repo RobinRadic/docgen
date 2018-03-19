@@ -1,6 +1,6 @@
   var fetchTextFromURL;
   if (typeof XMLHttpRequest != 'undefined') {
-    fetchTextFromURL = function(url, fulfill, reject) {
+    fetchTextFromURL = function(url, authorization, fulfill, reject) {
       var xhr = new XMLHttpRequest();
       var sameDomain = true;
       var doTimeout = false;
@@ -31,29 +31,50 @@
 
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-          if (xhr.status === 200 || (xhr.status == 0 && xhr.responseText)) {
+          // in Chrome on file:/// URLs, status is 0
+          if (xhr.status == 0) {
+            if (xhr.responseText) {
+              load();
+            }
+            else {
+              // when responseText is empty, wait for load or error event
+              // to inform if it is a 404 or empty file
+              xhr.addEventListener('error', error);
+              xhr.addEventListener('load', load);
+            }
+          }
+          else if (xhr.status === 200) {
             load();
-          } else {
+          }
+          else {
             error();
           }
         }
       };
       xhr.open("GET", url, true);
 
-      if (xhr.setRequestHeader)
-        xhr.setRequestHeader('Accept', 'application/x-es-module */*');
+      if (xhr.setRequestHeader) {
+        xhr.setRequestHeader('Accept', 'application/x-es-module, */*');
+        // can set "authorization: true" to enable withCredentials only
+        if (authorization) {
+          if (typeof authorization == 'string')
+            xhr.setRequestHeader('Authorization', authorization);
+          xhr.withCredentials = true;
+        }
+      }
 
-      if (doTimeout)
+      if (doTimeout) {
         setTimeout(function() {
           xhr.send();
         }, 0);
-
-      xhr.send(null);
+      } else {
+        xhr.send(null);
+      }
     };
   }
-  else if (typeof require != 'undefined') {
+  else if (typeof require != 'undefined' && typeof process != 'undefined') {
     var fs;
-    fetchTextFromURL = function(url, fulfill, reject) {
+    fetchTextFromURL = function(url, authorization, fulfill, reject) {
       if (url.substr(0, 8) != 'file:///')
         throw new Error('Unable to fetch "' + url + '". Only file URLs of the form file:/// allowed running in Node.');
       fs = fs || require('fs');
@@ -76,12 +97,35 @@
       });
     };
   }
+  else if (typeof self != 'undefined' && typeof self.fetch != 'undefined') {
+    fetchTextFromURL = function(url, authorization, fulfill, reject) {
+      var opts = {
+        headers: {'Accept': 'application/x-es-module, */*'}
+      };
+
+      if (authorization) {
+        if (typeof authorization == 'string')
+          opts.headers['Authorization'] = authorization;
+        opts.credentials = 'include';
+      }
+
+      fetch(url, opts)
+        .then(function (r) {
+          if (r.ok) {
+            return r.text();
+          } else {
+            throw new Error('Fetch error: ' + r.status + ' ' + r.statusText);
+          }
+        })
+        .then(fulfill, reject);
+    }
+  }
   else {
     throw new TypeError('No environment fetch API available.');
   }
 
   SystemLoader.prototype.fetch = function(load) {
     return new Promise(function(resolve, reject) {
-      fetchTextFromURL(load.address, resolve, reject);
+      fetchTextFromURL(load.address, undefined, resolve, reject);
     });
   };

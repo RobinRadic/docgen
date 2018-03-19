@@ -52,7 +52,7 @@ module.exports = {
             characterWidth: 10,
             lineHeight: 20
         };
-        next()
+        next();
     },
 
     "test: render line with hard tabs should render the same as lines with soft tabs" : function() {
@@ -87,11 +87,11 @@ module.exports = {
     },
 
     "test rendering of indent guides" : function() {
-        var textLayer = this.textLayer
+        var textLayer = this.textLayer;
         var EOL = "<span class='ace_invisible ace_invisible_eol'>" + textLayer.EOL_CHAR + "</span>";
-        var SPACE = function(i) {return Array(i+1).join(" ")}
-        var DOT = function(i) {return Array(i+1).join(textLayer.SPACE_CHAR)}
-        var TAB = function(i) {return Array(i+1).join(textLayer.TAB_CHAR)}
+        var SPACE = function(i) {return Array(i+1).join(" ");};
+        var DOT = function(i) {return Array(i+1).join(textLayer.SPACE_CHAR);};
+        var TAB = function(i) {return Array(i+1).join(textLayer.TAB_CHAR);};
         function testRender(results) {
             for (var i = results.length; i--; ) {
                 var stringBuilder = [];
@@ -109,7 +109,7 @@ module.exports = {
         this.textLayer.setShowInvisibles(true);
         testRender([
             "<span class='ace_indent-guide ace_invisible ace_invisible_space'>" + DOT(4) + "</span><span class='ace_invisible ace_invisible_space'>" + DOT(2) + "</span>" + EOL,
-            "<span class='ace_indent-guide ace_invisible ace_invisible_tab'>" + TAB(4) + "</span><span class='ace_invisible ace_invisible_tab'>" + TAB(4) + "</span><span class='ace_identifier'>f</span>" + EOL,
+            "<span class='ace_indent-guide ace_invisible ace_invisible_tab'>" + TAB(4) + "</span><span class='ace_invisible ace_invisible_tab'>" + TAB(4) + "</span><span class='ace_identifier'>f</span>" + EOL
         ]);
         this.textLayer.setDisplayIndentGuides(false);
         testRender([
@@ -122,5 +122,5 @@ module.exports = {
 });
 
 if (typeof module !== "undefined" && module === require.main) {
-    require("asyncjs").test.testcase(module.exports).exec()
+    require("asyncjs").test.testcase(module.exports).exec();
 }

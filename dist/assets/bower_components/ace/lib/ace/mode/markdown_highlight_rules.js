@@ -41,7 +41,7 @@ var CssHighlightRules = require("./css_highlight_rules").CssHighlightRules;
 
 var escaped = function(ch) {
     return "(?:[^" + lang.escapeRegExp(ch) + "\\\\]|\\\\.)*";
-}
+};
 
 function github_embed(tag, prefix) {
     return { // Github style block
@@ -109,7 +109,7 @@ var MarkdownHighlightRules = function() {
             regex : "^([ ]{0,3}\\[)([^\\]]+)(\\]:\\s*)([^ ]+)(\\s*(?:[\"][^\"]+[\"])?(\\s*))$"
         }, { // link by reference
             token : ["text", "string", "text", "constant", "text"],
-            regex : "(\\[)(" + escaped("]") + ")(\\]\s*\\[)("+ escaped("]") + ")(\\])"
+            regex : "(\\[)(" + escaped("]") + ")(\\]\\s*\\[)("+ escaped("]") + ")(\\])"
         }, { // link by url
             token : ["text", "string", "text", "markup.underline", "string", "text"],
             regex : "(\\[)(" +                                        // [
@@ -136,6 +136,7 @@ var MarkdownHighlightRules = function() {
         // code block
         "allowBlock": [
             {token : "support.function", regex : "^ {4}.+", next : "allowBlock"},
+            {token : "empty_line", regex : '^$', next: "allowBlock"},
             {token : "empty", regex : "", next : "start"}
         ],
 
@@ -191,8 +192,7 @@ var MarkdownHighlightRules = function() {
             regex : "^\\s*```",
             next  : "start"
         }, {
-            token : "support.function",
-            regex : ".+"
+            defaultToken : "support.function"
         } ]
     });
 

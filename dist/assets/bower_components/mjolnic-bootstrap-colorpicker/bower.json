@@ -1,6 +1,5 @@
 {
-  "name": "mjolnic-bootstrap-colorpicker",
-  "version": "2.3.0",
+  "name": "bootstrap-colorpicker",
   "main": [
     "dist/css/bootstrap-colorpicker.css",
     "dist/js/bootstrap-colorpicker.js"
@@ -11,10 +10,12 @@
   },
   "ignore": [
     "\\.*",
-    "/src",
     "/index.html",
     "/package.json",
     "/composer.json",
-    "/Gruntfile.js"
+    "/Gruntfile.js",
+    "/.travis.yml",
+    "/travis.sh",
+    "/server.js"
   ]
 }

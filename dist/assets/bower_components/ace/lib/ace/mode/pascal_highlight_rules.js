@@ -103,7 +103,7 @@ var PascalHighlightRules = function() {
               { token: 'punctuation.definition.string.end.pascal',
                 regex: '"',
                 next: 'pop' },
-              { defaultToken: 'string.quoted.double.pascal' } ],
+              { defaultToken: 'string.quoted.double.pascal' } ]
            //Double quoted strings are an extension and (generally) support C-style escape sequences.
             },
          { token: 'punctuation.definition.string.begin.pascal',
@@ -116,7 +116,7 @@ var PascalHighlightRules = function() {
                 next: 'pop' },
               { defaultToken: 'string.quoted.single.pascal' } ] },
           { token: 'keyword.operator',
-           regex: '[+\\-;,/*%]|:=|=' } ] }
+           regex: '[+\\-;,/*%]|:=|=' } ] };
     
     this.normalizeRules();
 };

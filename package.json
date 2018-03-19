@@ -5,7 +5,7 @@
     "main": "lib/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "echo \"Starting build\" && rm -rf bower_components node_modules && npm install && bower install && grunt build"
+        "build": "echo \"Starting build\" && grunt dist"
     },
     "bin": {
         "docgen": "lib/bin/docgen.js"

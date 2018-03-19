@@ -2,7 +2,7 @@
 
   var isWorker = typeof window == 'undefined' && typeof self != 'undefined' && typeof importScripts != 'undefined';
   var isBrowser = typeof window != 'undefined' && typeof document != 'undefined';
-  var isWindows = typeof process != 'undefined' && !!process.platform.match(/^win/);
+  var isWindows = typeof process != 'undefined' && typeof process.platform != 'undefined' && !!process.platform.match(/^win/);
 
   if (!__global.console)
     __global.console = { assert: function() {} };
@@ -34,24 +34,14 @@
   })();
 
   function addToError(err, msg) {
-    var newErr;
     if (err instanceof Error) {
-      var newErr = new Error(err.message, err.fileName, err.lineNumber);
-      if (isBrowser) {
-        newErr.message = err.message + '\n\t' + msg;
-        newErr.stack = err.stack;
-      }
-      else {
-        // node errors only look correct with the stack modified
-        newErr.message = err.message;
-        newErr.stack = err.stack + '\n\t' + msg;
-      }
+      err.message = msg + '\n\t' + err.message;
+      Error.call(err, err.message);
     }
     else {
-      newErr = err + '\n\t' + msg;
+      err = msg + '\n\t' + err;
     }
-      
-    return newErr;
+    return err;
   }
 
   function __eval(source, debugName, context) {

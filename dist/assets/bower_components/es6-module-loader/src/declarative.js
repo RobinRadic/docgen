@@ -158,7 +158,7 @@
 
       module.locked = false;
       return value;
-    });
+    }, { id: load.name });
 
     // setup our setters and execution function
     module.setters = registryEntry.setters;

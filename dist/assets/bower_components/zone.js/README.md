@@ -179,7 +179,7 @@ Transforms a function to run within the given zone.
 ### `zone.fork`
 
 ```javascript
-zone.fork({
+var myZone = zone.fork({
   onZoneCreated: function () {},
   beforeTask: function () {},
   afterTask: function () {},
@@ -190,7 +190,6 @@ zone.fork({
   setInterval: function () {},
   alert: function () {},
   prompt: function () {},
-  addEventListener: function () {}
 });
 myZone.run(function () {
   // woo!
@@ -232,9 +231,61 @@ For instance `clearTimeout` and `removeEventListener`.
 These hooks allow you to change the behavior of `window.setTimeout`, `window.setInterval`, etc.
 While in this zone, calls to `window.setTimeout` will redirect to `zone.setTimeout`.
 
+### `zone.requestAnimationFrame`, `zone.webkitRequestAnimationFrame`, `zone.mozRequestAnimationFrame`
+
+These hooks allow you to change the behavior of `window.requestAnimationFrame()`, 
+`window.webkitRequestAnimationFrame`, and `window.mozRequestAnimationFrame`.
+
+By default the callback is executed in the zone where those methods have been called to avoid 
+growing the stack size on each recursive call.
+
 ### `zone.addEventListener`
 
-This hook allows you to intercept calls to `EventTarget.addEventListener`.
+This hook allows you to intercept calls to `EventTarget#addEventListener`.
+
+````javascript
+var clickListenerCount = 0;
+
+zone.fork(
+  $addEventListener: function(parentAddEventListener) {
+    return function (type, listener) {
+      if (type === 'click') clickListenerCount++;
+      return parentAddEventListener.apply(this, arguments);
+    };
+  }
+);
+
+zone.run(function() {
+  myElement.addEventListener('click', listener);
+  myOtherElement.addEventListener('click', listener);
+
+  console.log(clickListenerCount); // 2
+});
+````
+
+### `zone.removeEventListener`
+
+This hook allows you to intercept calls to `EventTarget#removeEventListener`.
+
+````javascript
+var clickListenerCount = 0;
+
+zone.fork(
+  $removeEventListener: function(parentRemoveEventListener) {
+    return function (type, listener) {
+      if (type === 'click') clickListenerCount--;
+      return parentRemoveEventListener.apply(this, arguments);
+    };
+  }
+);
+
+zone.run(function() {
+  myElement.addEventListener('click', listener);
+  myElement.removeEventListener('click', listener);
+
+  console.log(clickListenerCount); // 0
+});
+````
 
 
 ## Status

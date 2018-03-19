@@ -366,13 +366,14 @@ function logloads(loads) {
         if (loader.loads[i].name == name) {
           existingLoad = loader.loads[i];
 
-          if(step == 'translate' && !existingLoad.source) {
+          if (step == 'translate' && !existingLoad.source) {
             existingLoad.address = stepState.moduleAddress;
             proceedToTranslate(loader, existingLoad, Promise.resolve(stepState.moduleSource));
           }
 
-          // a primary load -> use that existing linkset
-          if (existingLoad.linkSets.length)
+          // a primary load -> use that existing linkset if it is for the direct load here
+          // otherwise create a new linkset unit
+          if (existingLoad.linkSets.length && existingLoad.linkSets[0].loads[0].name == existingLoad.name)
             return existingLoad.linkSets[0].done.then(function() {
               resolve(existingLoad);
             });
@@ -709,18 +710,21 @@ function logloads(loads) {
     },
     // 26.3.3.9 keys not implemented
     // 26.3.3.10
-    load: function(name, options) {
+    load: function(name) {
       var loader = this._loader;
-      if (loader.modules[name]) {
-        doEnsureEvaluated(loader.modules[name], [], loader);
-        return Promise.resolve(loader.modules[name].module);
-      }
-      return loader.importPromises[name] || createImportPromise(this, name,
-        loadModule(loader, name, {})
-        .then(function(load) {
-          delete loader.importPromises[name];
-          return evaluateLoadedModule(loader, load);
-        }));
+      if (loader.modules[name])
+        return Promise.resolve();
+      return loader.importPromises[name] || createImportPromise(this, name, new Promise(asyncStartLoadPartwayThrough({
+        step: 'locate',
+        loader: loader,
+        moduleName: name,
+        moduleMetadata: {},
+        moduleSource: undefined,
+        moduleAddress: undefined
+      }))
+      .then(function() {
+        delete loader.importPromises[name];
+      }));
     },
     // 26.3.3.11
     module: function(source, options) {
@@ -740,19 +744,14 @@ function logloads(loads) {
       if (typeof obj != 'object')
         throw new TypeError('Expected object');
 
-      // we do this to be able to tell if a module is a module privately in ES5
-      // by doing m instanceof Module
       var m = new Module();
 
-      var pNames;
-      if (Object.getOwnPropertyNames && obj != null) {
+      var pNames = [];
+      if (Object.getOwnPropertyNames && obj != null)
         pNames = Object.getOwnPropertyNames(obj);
-      }
-      else {
-        pNames = [];
+      else
         for (var key in obj)
           pNames.push(key);
-      }
 
       for (var i = 0; i < pNames.length; i++) (function(key) {
         defineProperty(m, key, {
@@ -760,12 +759,15 @@ function logloads(loads) {
           enumerable: true,
           get: function () {
             return obj[key];
+          },
+          set: function() {
+            throw new Error('Module exports cannot be changed externally.');
           }
         });
       })(pNames[i]);
 
-      if (Object.preventExtensions)
-        Object.preventExtensions(m);
+      if (Object.freeze)
+        Object.freeze(m);
 
       return m;
     },

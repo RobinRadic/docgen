@@ -17,7 +17,8 @@
                     "rootDir": "./src/lib",
                     "target": "es5",
                     "mode": "file",
-                    "experimentalDecorators": ""
+                    "experimentalDecorators": "",
+                    "ignoreCompilerErrors":""
                 }
             }
         },

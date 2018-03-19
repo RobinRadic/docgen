@@ -43,6 +43,7 @@ var Editor = require("../../editor").Editor;
 var EditSession = require("../../edit_session").EditSession;
 var MockRenderer = require("../../test/mockrenderer").MockRenderer;
 var JavaScriptMode = require("../javascript").Mode;
+var RustMode = require("../rust").Mode;
 var XMLMode = require("../xml").Mode;
 var editor;
 var exec = function(name, times, args) {
@@ -161,7 +162,7 @@ module.exports = {
             "    <SelfClosingTag />"
         ].join("\n"));
         editor.session.setMode(new XMLMode);
-        exec("gotolinedown", 1);
+        exec("golinedown", 1);
         exec("gotolineend", 1);
         exec("insertstring", 1, '\n');
         assert.equal(editor.session.getLine(2), "    ");
@@ -169,6 +170,38 @@ module.exports = {
         exec("gotolineend", 1);
         exec("insertstring", 1, '\n');
         assert.equal(editor.session.getLine(2), "    ");
+        editor.session.setValue(["<OuterTag",
+            "    <xyzrt"
+        ].join("\n"));        
+        exec("golinedown", 1);
+        exec("gotolineend", 1);
+        exec("selectleft", 3);
+        exec("insertstring", 1, '>');
+        assert.equal(editor.session.getLine(1), "    <xy></xy>");
+    },
+    "test: quotes": function() {
+        editor = new Editor(new MockRenderer());
+        editor.session.setMode(new RustMode);
+        editor.setValue("");
+        exec("insertstring", 1, '"');
+        exec("insertstring", 1, 'a');
+        assert.equal(editor.getValue(), '"a"');
+        exec("backspace", 2);
+        exec("insertstring", 1, "'");
+        assert.equal(editor.getValue(), "'");
+        
+        editor.session.setMode(new JavaScriptMode);
+        editor.setValue("");
+        exec("insertstring", 1, '"');
+        exec("insertstring", 1, 'a');
+        assert.equal(editor.getValue(), '"a"');
+        exec("backspace", 2);
+        exec("insertstring", 1, "'");
+        assert.equal(editor.getValue(), "''");
+        exec("backspace", 1);
+        exec("insertstring", 1, '`');
+        exec("insertstring", 1, 'b');
+        assert.equal(editor.getValue(), "`b`");
     }
 };
 

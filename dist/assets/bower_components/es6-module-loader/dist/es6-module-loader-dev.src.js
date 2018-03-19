@@ -4,9 +4,8 @@ function URLPolyfill(url, baseURL) {
   if (typeof url != 'string')
     throw new TypeError('URL must be a string');
   var m = String(url).replace(/^\s+|\s+$/g, "").match(/^([^:\/?#]+:)?(?:\/\/(?:([^:@\/?#]*)(?::([^:@\/?#]*))?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/);
-  if (!m) {
-    throw new RangeError();
-  }
+  if (!m)
+    throw new RangeError('Invalid URL format');
   var protocol = m[1] || "";
   var username = m[2] || "";
   var password = m[3] || "";
@@ -18,26 +17,23 @@ function URLPolyfill(url, baseURL) {
   var hash = m[9] || "";
   if (baseURL !== undefined) {
     var base = baseURL instanceof URLPolyfill ? baseURL : new URLPolyfill(baseURL);
-    var flag = protocol === "" && host === "" && username === "";
-    if (flag && pathname === "" && search === "") {
+    var flag = !protocol && !host && !username;
+    if (flag && !pathname && !search)
       search = base.search;
-    }
-    if (flag && pathname.charAt(0) !== "/") {
-      pathname = (pathname !== "" ? (((base.host !== "" || base.username !== "") && base.pathname === "" ? "/" : "") + base.pathname.slice(0, base.pathname.lastIndexOf("/") + 1) + pathname) : base.pathname);
-    }
+    if (flag && pathname[0] !== "/")
+      pathname = (pathname ? (((base.host || base.username) && !base.pathname ? "/" : "") + base.pathname.slice(0, base.pathname.lastIndexOf("/") + 1) + pathname) : base.pathname);
     // dot segments removal
     var output = [];
     pathname.replace(/^(\.\.?(\/|$))+/, "")
       .replace(/\/(\.(\/|$))+/g, "/")
       .replace(/\/\.\.$/, "/../")
       .replace(/\/?[^\/]*/g, function (p) {
-        if (p === "/..") {
+        if (p === "/..")
           output.pop();
-        } else {
+        else
           output.push(p);
-        }
       });
-    pathname = output.join("").replace(/^\//, pathname.charAt(0) === "/" ? "/" : "");
+    pathname = output.join("").replace(/^\//, pathname[0] === "/" ? "/" : "");
     if (flag) {
       port = base.port;
       hostname = base.hostname;
@@ -45,17 +41,16 @@ function URLPolyfill(url, baseURL) {
       password = base.password;
       username = base.username;
     }
-    if (protocol === "") {
+    if (!protocol)
       protocol = base.protocol;
-    }
   }
 
   // convert windows file URLs to use /
   if (protocol == 'file:')
     pathname = pathname.replace(/\\/g, '/');
 
-  this.origin = protocol + (protocol !== "" || host !== "" ? "//" : "") + host;
-  this.href = protocol + (protocol !== "" || host !== "" ? "//" : "") + (username !== "" ? username + (password !== "" ? ":" + password : "") + "@" : "") + host + pathname + search + hash;
+  this.origin = host ? protocol + (protocol !== "" || host !== "" ? "//" : "") + host : "";
+  this.href = protocol + (protocol && host || protocol == "file:" ? "//" : "") + (username !== "" ? username + (password !== "" ? ":" + password : "") + "@" : "") + host + pathname + search + hash;
   this.protocol = protocol;
   this.username = username;
   this.password = password;
@@ -72,7 +67,7 @@ global.URLPolyfill = URLPolyfill;
 
   var isWorker = typeof window == 'undefined' && typeof self != 'undefined' && typeof importScripts != 'undefined';
   var isBrowser = typeof window != 'undefined' && typeof document != 'undefined';
-  var isWindows = typeof process != 'undefined' && !!process.platform.match(/^win/);
+  var isWindows = typeof process != 'undefined' && typeof process.platform != 'undefined' && !!process.platform.match(/^win/);
 
   if (!__global.console)
     __global.console = { assert: function() {} };
@@ -104,24 +99,14 @@ global.URLPolyfill = URLPolyfill;
   })();
 
   function addToError(err, msg) {
-    var newErr;
     if (err instanceof Error) {
-      var newErr = new Error(err.message, err.fileName, err.lineNumber);
-      if (isBrowser) {
-        newErr.message = err.message + '\n\t' + msg;
-        newErr.stack = err.stack;
-      }
-      else {
-        // node errors only look correct with the stack modified
-        newErr.message = err.message;
-        newErr.stack = err.stack + '\n\t' + msg;
-      }
+      err.message = msg + '\n\t' + err.message;
+      Error.call(err, err.message);
     }
     else {
-      newErr = err + '\n\t' + msg;
+      err = msg + '\n\t' + err;
     }
-      
-    return newErr;
+    return err;
   }
 
   function __eval(source, debugName, context) {
@@ -529,13 +514,14 @@ function logloads(loads) {
         if (loader.loads[i].name == name) {
           existingLoad = loader.loads[i];
 
-          if(step == 'translate' && !existingLoad.source) {
+          if (step == 'translate' && !existingLoad.source) {
             existingLoad.address = stepState.moduleAddress;
             proceedToTranslate(loader, existingLoad, Promise.resolve(stepState.moduleSource));
           }
 
-          // a primary load -> use that existing linkset
-          if (existingLoad.linkSets.length)
+          // a primary load -> use that existing linkset if it is for the direct load here
+          // otherwise create a new linkset unit
+          if (existingLoad.linkSets.length && existingLoad.linkSets[0].loads[0].name == existingLoad.name)
             return existingLoad.linkSets[0].done.then(function() {
               resolve(existingLoad);
             });
@@ -872,18 +858,21 @@ function logloads(loads) {
     },
     // 26.3.3.9 keys not implemented
     // 26.3.3.10
-    load: function(name, options) {
+    load: function(name) {
       var loader = this._loader;
-      if (loader.modules[name]) {
-        doEnsureEvaluated(loader.modules[name], [], loader);
-        return Promise.resolve(loader.modules[name].module);
-      }
-      return loader.importPromises[name] || createImportPromise(this, name,
-        loadModule(loader, name, {})
-        .then(function(load) {
-          delete loader.importPromises[name];
-          return evaluateLoadedModule(loader, load);
-        }));
+      if (loader.modules[name])
+        return Promise.resolve();
+      return loader.importPromises[name] || createImportPromise(this, name, new Promise(asyncStartLoadPartwayThrough({
+        step: 'locate',
+        loader: loader,
+        moduleName: name,
+        moduleMetadata: {},
+        moduleSource: undefined,
+        moduleAddress: undefined
+      }))
+      .then(function() {
+        delete loader.importPromises[name];
+      }));
     },
     // 26.3.3.11
     module: function(source, options) {
@@ -903,19 +892,14 @@ function logloads(loads) {
       if (typeof obj != 'object')
         throw new TypeError('Expected object');
 
-      // we do this to be able to tell if a module is a module privately in ES5
-      // by doing m instanceof Module
       var m = new Module();
 
-      var pNames;
-      if (Object.getOwnPropertyNames && obj != null) {
+      var pNames = [];
+      if (Object.getOwnPropertyNames && obj != null)
         pNames = Object.getOwnPropertyNames(obj);
-      }
-      else {
-        pNames = [];
+      else
         for (var key in obj)
           pNames.push(key);
-      }
 
       for (var i = 0; i < pNames.length; i++) (function(key) {
         defineProperty(m, key, {
@@ -923,12 +907,15 @@ function logloads(loads) {
           enumerable: true,
           get: function () {
             return obj[key];
+          },
+          set: function() {
+            throw new Error('Module exports cannot be changed externally.');
           }
         });
       })(pNames[i]);
 
-      if (Object.preventExtensions)
-        Object.preventExtensions(m);
+      if (Object.freeze)
+        Object.freeze(m);
 
       return m;
     },
@@ -1126,7 +1113,7 @@ function logloads(loads) {
 
       module.locked = false;
       return value;
-    });
+    }, { id: load.name });
 
     // setup our setters and execution function
     module.setters = registryEntry.setters;
@@ -1313,8 +1300,12 @@ var transpile = (function() {
       return compiler.compile(source, filename);
     }
     catch(e) {
-      // traceur throws an error array
-      throw e[0];
+      // on older versions of traceur (<0.9.3), an array of errors is thrown
+      // rather than a single error.
+      if (e.length) {
+        throw e[0];
+      }
+      throw e;
     }
   }
 
@@ -1336,7 +1327,7 @@ var transpile = (function() {
     options.target = options.target || ts.ScriptTarget.ES5;
     if (options.sourceMap === undefined)
       options.sourceMap = true;
-    if (options.sourceMap)
+    if (options.sourceMap && options.inlineSourceMap !== false)
       options.inlineSourceMap = true;
 
     options.module = ts.ModuleKind.System;
@@ -1369,7 +1360,7 @@ function SystemLoader() {
 // NB no specification provided for System.paths, used ideas discussed in https://github.com/jorendorff/js-loaders/issues/25
 function applyPaths(paths, name) {
   // most specific (most number of slashes in path) match wins
-  var pathMatch = '', wildcard, maxSlashCount = 0;
+  var pathMatch = '', wildcard, maxWildcardPrefixLen = 0;
 
   // check to see if we have a paths entry
   for (var p in paths) {
@@ -1379,26 +1370,28 @@ function applyPaths(paths, name) {
 
     // exact path match
     if (pathParts.length == 1) {
-      if (name == p) {
-        pathMatch = p;
-        break;
-      }
+      if (name == p)
+        return paths[p];
+      
+      // support trailing / in paths rules
+      else if (name.substr(0, p.length - 1) == p.substr(0, p.length - 1) && (name.length < p.length || name[p.length - 1] == p[p.length - 1]) && paths[p][paths[p].length - 1] == '/')
+        return paths[p].substr(0, paths[p].length - 1) + (name.length > p.length ? '/' + name.substr(p.length) : '');
     }
     // wildcard path match
     else {
-      var slashCount = p.split('/').length;
-      if (slashCount >= maxSlashCount &&
+      var wildcardPrefixLen = pathParts[0].length;
+      if (wildcardPrefixLen >= maxWildcardPrefixLen &&
           name.substr(0, pathParts[0].length) == pathParts[0] &&
           name.substr(name.length - pathParts[1].length) == pathParts[1]) {
-            maxSlashCount = slashCount;
+            maxWildcardPrefixLen = wildcardPrefixLen;
             pathMatch = p;
             wildcard = name.substr(pathParts[0].length, name.length - pathParts[1].length - pathParts[0].length);
           }
     }
   }
 
-  var outPath = paths[pathMatch] || name;
-  if (wildcard)
+  var outPath = paths[pathMatch];
+  if (typeof wildcard == 'string')
     outPath = outPath.replace('*', wildcard);
 
   return outPath;
@@ -1419,7 +1412,7 @@ SystemLoader.prototype.normalize = function(name, parentName, parentAddress) {
 
   // not absolute or relative -> apply paths (what will be sites)
   if (!name.match(absURLRegEx) && name[0] != '.')
-    name = new URL(applyPaths(this.paths, name), baseURI).href;
+    name = new URL(applyPaths(this.paths, name) || name, baseURI).href;
   // apply parent-relative normalization, parentAddress is already normalized
   else
     name = new URL(name, parentName || baseURI).href;
@@ -1456,7 +1449,7 @@ SystemLoader.prototype.instantiate = function(load) {
 };
   var fetchTextFromURL;
   if (typeof XMLHttpRequest != 'undefined') {
-    fetchTextFromURL = function(url, fulfill, reject) {
+    fetchTextFromURL = function(url, authorization, fulfill, reject) {
       var xhr = new XMLHttpRequest();
       var sameDomain = true;
       var doTimeout = false;
@@ -1487,29 +1480,50 @@ SystemLoader.prototype.instantiate = function(load) {
 
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-          if (xhr.status === 200 || (xhr.status == 0 && xhr.responseText)) {
+          // in Chrome on file:/// URLs, status is 0
+          if (xhr.status == 0) {
+            if (xhr.responseText) {
+              load();
+            }
+            else {
+              // when responseText is empty, wait for load or error event
+              // to inform if it is a 404 or empty file
+              xhr.addEventListener('error', error);
+              xhr.addEventListener('load', load);
+            }
+          }
+          else if (xhr.status === 200) {
             load();
-          } else {
+          }
+          else {
             error();
           }
         }
       };
       xhr.open("GET", url, true);
 
-      if (xhr.setRequestHeader)
-        xhr.setRequestHeader('Accept', 'application/x-es-module */*');
+      if (xhr.setRequestHeader) {
+        xhr.setRequestHeader('Accept', 'application/x-es-module, */*');
+        // can set "authorization: true" to enable withCredentials only
+        if (authorization) {
+          if (typeof authorization == 'string')
+            xhr.setRequestHeader('Authorization', authorization);
+          xhr.withCredentials = true;
+        }
+      }
 
-      if (doTimeout)
+      if (doTimeout) {
         setTimeout(function() {
           xhr.send();
         }, 0);
-
-      xhr.send(null);
+      } else {
+        xhr.send(null);
+      }
     };
   }
-  else if (typeof require != 'undefined') {
+  else if (typeof require != 'undefined' && typeof process != 'undefined') {
     var fs;
-    fetchTextFromURL = function(url, fulfill, reject) {
+    fetchTextFromURL = function(url, authorization, fulfill, reject) {
       if (url.substr(0, 8) != 'file:///')
         throw new Error('Unable to fetch "' + url + '". Only file URLs of the form file:/// allowed running in Node.');
       fs = fs || require('fs');
@@ -1532,13 +1546,36 @@ SystemLoader.prototype.instantiate = function(load) {
       });
     };
   }
+  else if (typeof self != 'undefined' && typeof self.fetch != 'undefined') {
+    fetchTextFromURL = function(url, authorization, fulfill, reject) {
+      var opts = {
+        headers: {'Accept': 'application/x-es-module, */*'}
+      };
+
+      if (authorization) {
+        if (typeof authorization == 'string')
+          opts.headers['Authorization'] = authorization;
+        opts.credentials = 'include';
+      }
+
+      fetch(url, opts)
+        .then(function (r) {
+          if (r.ok) {
+            return r.text();
+          } else {
+            throw new Error('Fetch error: ' + r.status + ' ' + r.statusText);
+          }
+        })
+        .then(fulfill, reject);
+    }
+  }
   else {
     throw new TypeError('No environment fetch API available.');
   }
 
   SystemLoader.prototype.fetch = function(load) {
     return new Promise(function(resolve, reject) {
-      fetchTextFromURL(load.address, resolve, reject);
+      fetchTextFromURL(load.address, undefined, resolve, reject);
     });
   };
 

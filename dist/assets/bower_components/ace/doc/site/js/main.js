@@ -39,7 +39,7 @@ $(function() {
             <div class="alert alert-error">\
               <button type="button" class="close" data-dismiss="alert">\xd7</button>\
               <strong>Oh No!</strong> Couldn\'t load <code>build/src/ace.js</code>.<br>\
-                You can build it by running <code>node Makefile.dryice.js</code><br>\
+                You can build it by running <code>npm install ; node Makefile.dryice.js</code><br>\
                 Or download older version by running <code>git submodule update --init --recursive</code><br>\
             </div>\
           </div>');
@@ -50,12 +50,12 @@ $(function() {
         }
     });
     
-    $("ul.menu-list li").click(function(e) {
+    $("ul.menu-list li").click("click auxclick", function(e) {
         if (e.target.tagName !== "A") {
             var href = $(this).find("a").attr("href");
-            if (e.button == 1)
+            if (e.originalEvent.button == 1)
                 window.open(href, "_blank");
-            else
+            else if (e.originalEvent.button == 0)
                 window.location = href;
         }
     });
@@ -138,7 +138,9 @@ $(function() {
 
         var state = {};
         state.nav = $(this).attr("href").substr(1);
-        $.bbq.pushState(state);
+        var oldState = $.bbq.getState("nav") || "about";
+        if (state.nav != oldState)
+            $.bbq.pushState(state);
      });
 
     $('#tabnav a[data-toggle="tab"]').on('shown', function (e) {

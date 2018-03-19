@@ -38,15 +38,15 @@ var iSearchCommandModule = require("../commands/incremental_search_commands");
 
 var screenToTextBlockCoordinates = function(x, y) {
     var canvasPos = this.scroller.getBoundingClientRect();
+    var offsetX = x + this.scrollLeft - canvasPos.left - this.$padding;
+    
+    var col = Math.floor(offsetX / this.characterWidth);
 
-    var col = Math.floor(
-        (x + this.scrollLeft - canvasPos.left - this.$padding) / this.characterWidth
-    );
     var row = Math.floor(
         (y + this.scrollTop - canvasPos.top) / this.lineHeight
     );
 
-    return this.session.screenToDocumentPosition(row, col);
+    return this.session.screenToDocumentPosition(row, col, offsetX);
 };
 
 var HashHandler = require("./hash_handler").HashHandler;
@@ -141,7 +141,7 @@ exports.handler.attach = function(editor) {
                     replacement : undefined);
         }
         return lastMark;
-    }
+    };
 
     editor.on("click", $resetMarkMode);
     editor.on("changeSession", $kbSessionChange);
@@ -244,7 +244,7 @@ exports.handler.getStatusText = function(editor, data) {
   if (data.count)
     str += data.count;
   if (data.keyChain)
-    str += " " + data.keyChain
+    str += " " + data.keyChain;
   return str;
 };
 
@@ -330,7 +330,7 @@ exports.handler.handleKeyboard = function(data, hashId, key, keyCode) {
         data.lastCommand = null;
 
     if (!command.readOnly && editor.emacsMark())
-        editor.setEmacsMark(null)
+        editor.setEmacsMark(null);
         
     if (data.count) {
         var count = data.count;
@@ -545,22 +545,29 @@ exports.handler.addCommands({
     },
     killLine: function(editor) {
         editor.pushEmacsMark(null);
-        var pos = editor.getCursorPosition();
-        if (pos.column === 0 &&
-            editor.session.doc.getLine(pos.row).length === 0) {
-            // If an already empty line is killed, remove
-            // the line entirely
-            editor.selection.selectLine();
-        } else {
-            // otherwise just remove from the current cursor position
-            // to the end (but don't delete the selection if it's before
-            // the cursor)
-            editor.clearSelection();
-            editor.selection.selectLineEnd();
-        }
+        // don't delete the selection if it's before the cursor
+        editor.clearSelection();
         var range = editor.getSelectionRange();
+        var line = editor.session.getLine(range.start.row);
+        range.end.column = line.length;
+        line = line.substr(range.start.column);
+        
+        var foldLine = editor.session.getFoldLine(range.start.row);
+        if (foldLine && range.end.row != foldLine.end.row) {
+            range.end.row = foldLine.end.row;
+            line = "x";
+        }
+        // remove EOL if only whitespace remains after the cursor
+        if (/^\s*$/.test(line)) {
+            range.end.row++;
+            line = editor.session.getLine(range.end.row);
+            range.end.column = /^\s*$/.test(line) ? line.length : 0;
+        }
         var text = editor.session.getTextRange(range);
-        exports.killRing.add(text);
+        if (editor.prevOp.command == this)
+            exports.killRing.append(text);
+        else
+            exports.killRing.add(text);
 
         editor.session.remove(range);
         editor.clearSelection();
@@ -581,6 +588,7 @@ exports.handler.addCommands({
         exec: function(editor) {
             exports.killRing.add(editor.getCopyText());
             editor.commands.byName.cut.exec(editor);
+            editor.setEmacsMark(null);
         },
         readOnly: true,
         multiSelectAction: "forEach"
@@ -633,6 +641,12 @@ exports.killRing = {
         str && this.$data.push(str);
         if (this.$data.length > 30)
             this.$data.shift();
+    },
+    append: function(str) {
+        var idx = this.$data.length - 1;
+        var text = this.$data[idx] || "";
+        if (str) text += str;
+        if (text) this.$data[idx] = text;
     },
     get: function(n) {
         n = n || 1;

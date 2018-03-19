@@ -60,7 +60,7 @@ function callHighlighterUpdate() {
             drawSingleLineMarker: function(_, markerRanges) {
                 ranges = ranges.concat(markerRanges);
             }
-        }
+        };
     session.$isearchHighlight.update([], mockMarkerLayer, session, {
         firstRow: 0, lastRow: session.getRowLength()});
     return ranges;
@@ -155,14 +155,14 @@ module.exports = {
     "test: backwards search" : function() {
         editor.moveCursorTo(1,0);
         iSearch.activate(editor, true);
-        iSearch.addString('1'); var range = iSearch.addString('2');;
+        iSearch.addString('1'); var range = iSearch.addString('2');
         testRanges("Range: [0/5] -> [0/3]", [range], "range");
         assert.position(editor.getCursorPosition(), 0, 3);
     },
 
     "test: forwards then backwards, same result, reoriented range" : function() {
         iSearch.activate(editor);
-        iSearch.addString('1'); var range = iSearch.addString('2');;
+        iSearch.addString('1'); var range = iSearch.addString('2');
         testRanges("Range: [0/3] -> [0/5]", [range], "range");
         assert.position(editor.getCursorPosition(), 0, 5);
 
@@ -173,7 +173,7 @@ module.exports = {
 
     "test: reuse prev search via option" : function() {
         iSearch.activate(editor);
-        iSearch.addString('1'); iSearch.addString('2');;
+        iSearch.addString('1'); iSearch.addString('2');
         assert.position(editor.getCursorPosition(), 0, 5);
         iSearch.deactivate();
 
@@ -184,14 +184,14 @@ module.exports = {
 
     "test: don't extend selection range if selection is empty" : function() {
         iSearch.activate(editor);
-        iSearch.addString('1'); iSearch.addString('2');;
+        iSearch.addString('1'); iSearch.addString('2');
         testRanges("Range: [0/5] -> [0/5]", [editor.getSelectionRange()], "sel range");
     },
 
     "test: extend selection range if selection exists" : function() {
         iSearch.activate(editor);
         editor.selection.selectTo(0, 1);
-        iSearch.addString('1'); iSearch.addString('2');;
+        iSearch.addString('1'); iSearch.addString('2');
         testRanges("Range: [0/0] -> [0/5]", [editor.getSelectionRange()], "sel range");
     },
 
@@ -209,5 +209,5 @@ module.exports = {
 });
 
 if (typeof module !== "undefined" && module === require.main) {
-    require("asyncjs").test.testcase(module.exports).exec()
+    require("asyncjs").test.testcase(module.exports).exec();
 }

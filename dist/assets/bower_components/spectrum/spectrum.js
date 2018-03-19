@@ -178,7 +178,7 @@
     function spectrum(element, o) {
 
         var opts = instanceOptions(o, element),
-            flat = opts.items,
+            flat = opts.flat,
             showSelectionPalette = opts.showSelectionPalette,
             localStorageKey = opts.localStorageKey,
             theme = opts.theme,

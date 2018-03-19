@@ -119,10 +119,6 @@ module.exports = function(config) {
         'internet explorer': '9..11'
       }
     });
-    
-
-    // IE tests disabled for now (https://github.com/ModuleLoader/es6-module-loader/issues/295)
-    customLaunchers = undefined;
 
     if (options.ie8) {
       customLaunchers = geSaLaKaCuLa({
@@ -131,6 +127,9 @@ module.exports = function(config) {
         }
       });
     }
+
+    // saucelabs still fail sporadically
+    customLaunchers = undefined;
 
     var now = new Date();
     var buildData = options.travis ?

@@ -465,6 +465,24 @@ var Selection = function(session) {
     };
 
     /**
+     *
+     * Returns `true` if moving the character next to the cursor in the specified direction is a soft tab.
+     * @param {Object} cursor the current cursor position
+     * @param {Number} tabSize the tab size
+     * @param {Number} direction 1 for right, -1 for left
+    */
+    this.wouldMoveIntoSoftTab = function(cursor, tabSize, direction) {
+        var start = cursor.column;
+        var end = cursor.column + tabSize;
+
+        if (direction < 0) {
+            start = cursor.column - tabSize;
+            end = cursor.column;
+        }
+        return this.session.isTabStop(cursor) && this.doc.getLine(cursor.row).slice(start, end).split(" ").length-1 == tabSize;
+    };
+
+    /**
     *
     * Moves the cursor left one column.
     **/
@@ -482,10 +500,11 @@ var Selection = function(session) {
         }
         else {
             var tabSize = this.session.getTabSize();
-            if (this.session.isTabStop(cursor) && this.doc.getLine(cursor.row).slice(cursor.column-tabSize, cursor.column).split(" ").length-1 == tabSize)
+            if (this.wouldMoveIntoSoftTab(cursor, tabSize, -1) && !this.session.getNavigateWithinSoftTabs()) {
                 this.moveCursorBy(0, -tabSize);
-            else
+            } else {
                 this.moveCursorBy(0, -1);
+            }
         }
     };
 
@@ -507,10 +526,11 @@ var Selection = function(session) {
         else {
             var tabSize = this.session.getTabSize();
             var cursor = this.lead;
-            if (this.session.isTabStop(cursor) && this.doc.getLine(cursor.row).slice(cursor.column, cursor.column+tabSize).split(" ").length-1 == tabSize)
+            if (this.wouldMoveIntoSoftTab(cursor, tabSize, 1) && !this.session.getNavigateWithinSoftTabs()) {
                 this.moveCursorBy(0, tabSize);
-            else
+            } else {
                 this.moveCursorBy(0, 1);
+            }
         }
     };
 
@@ -789,18 +809,31 @@ var Selection = function(session) {
             this.lead.column
         );
 
+        var offsetX;
+
         if (chars === 0) {
+            if (rows !== 0) {
+                if (this.session.$bidiHandler.isBidiRow(screenPos.row, this.lead.row)) {
+                    offsetX = this.session.$bidiHandler.getPosLeft(screenPos.column);
+                    screenPos.column = Math.round(offsetX / this.session.$bidiHandler.charWidths[0]);
+                } else {
+                    offsetX = screenPos.column * this.session.$bidiHandler.charWidths[0];
+                }
+            }
+
             if (this.$desiredColumn)
                 screenPos.column = this.$desiredColumn;
             else
                 this.$desiredColumn = screenPos.column;
         }
 
-        var docPos = this.session.screenToDocumentPosition(screenPos.row + rows, screenPos.column);
+        var docPos = this.session.screenToDocumentPosition(screenPos.row + rows, screenPos.column, offsetX);
         
         if (rows !== 0 && chars === 0 && docPos.row === this.lead.row && docPos.column === this.lead.column) {
-            if (this.session.lineWidgets && this.session.lineWidgets[docPos.row])
-                docPos.row++;
+            if (this.session.lineWidgets && this.session.lineWidgets[docPos.row]) {
+                if (docPos.row > 0 || rows > 0)
+                    docPos.row++;
+            }
         }
 
         // move the cursor and update the desired column
@@ -818,13 +851,12 @@ var Selection = function(session) {
     };
 
     /**
-    * Moves the cursor to the row and column provided. [If `preventUpdateDesiredColumn` is `true`, then the cursor stays in the same column position as its original point.]{: #preventUpdateBoolDesc}
-    * @param {Number} row The row to move to
-    * @param {Number} column The column to move to
-    * @param {Boolean} keepDesiredColumn [If `true`, the cursor move does not respect the previous column]{: #preventUpdateBool}
-    *
-    *
-    **/
+     * Moves the cursor to the row and column provided. [If `preventUpdateDesiredColumn` is `true`, then the cursor stays in the same column position as its original point.]{: #preventUpdateBoolDesc}
+     * @param {Number} row The row to move to
+     * @param {Number} column The column to move to
+     * @param {Boolean} keepDesiredColumn [If `true`, the cursor move does not respect the previous column]{: #preventUpdateBool}
+     *
+     **/
     this.moveCursorTo = function(row, column, keepDesiredColumn) {
         // Ensure the row/column is not inside of a fold.
         var fold = this.session.getFoldAt(row, column, 1);
@@ -834,6 +866,14 @@ var Selection = function(session) {
         }
 
         this.$keepDesiredColumnOnChange = true;
+        var line = this.session.getLine(row);
+        // do not allow putting cursor in the middle of surrogate pairs
+        if (/[\uDC00-\uDFFF]/.test(line.charAt(column)) && line.charAt(column - 1)) {
+            if (this.lead.row == row && this.lead.column == column + 1)
+                column = column - 1;
+            else
+                column = column + 1;
+        }
         this.lead.setPosition(row, column);
         this.$keepDesiredColumnOnChange = false;
 
@@ -842,13 +882,12 @@ var Selection = function(session) {
     };
 
     /**
-    * Moves the cursor to the screen position indicated by row and column. {:preventUpdateBoolDesc}
-    * @param {Number} row The row to move to
-    * @param {Number} column The column to move to
-    * @param {Boolean} keepDesiredColumn {:preventUpdateBool}
-    *
-    *
-    **/
+     * Moves the cursor to the screen position indicated by row and column. {:preventUpdateBoolDesc}
+     * @param {Number} row The row to move to
+     * @param {Number} column The column to move to
+     * @param {Boolean} keepDesiredColumn {:preventUpdateBool}
+     *
+     **/
     this.moveCursorToScreen = function(row, column, keepDesiredColumn) {
         var pos = this.session.screenToDocumentPosition(row, column);
         this.moveCursorTo(pos.row, pos.column, keepDesiredColumn);
@@ -883,17 +922,17 @@ var Selection = function(session) {
     };
 
     /**
-    * Saves the current cursor position and calls `func` that can change the cursor
-    * postion. The result is the range of the starting and eventual cursor position.
-    * Will reset the cursor position.
-    * @param {Function} The callback that should change the cursor position
-    * @returns {Range}
-    *
-    **/
+     * Saves the current cursor position and calls `func` that can change the cursor
+     * postion. The result is the range of the starting and eventual cursor position.
+     * Will reset the cursor position.
+     * @param {Function} The callback that should change the cursor position
+     * @returns {Range}
+     *
+     **/
     this.getRangeOfMovements = function(func) {
         var start = this.getCursor();
         try {
-            func.call(null, this);
+            func(this);
             var end = this.getCursor();
             return Range.fromPoints(start,end);
         } catch(e) {

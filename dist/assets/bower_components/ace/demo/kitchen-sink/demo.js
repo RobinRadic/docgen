@@ -299,6 +299,7 @@ var showHScrollEl = document.getElementById("show_hscroll");
 var showVScrollEl = document.getElementById("show_vscroll");
 var animateScrollEl = document.getElementById("animate_scroll");
 var softTabEl = document.getElementById("soft_tab");
+var navigateWithinSoftTabEl = document.getElementById("navigate_within_soft_tab");
 var behavioursEl = document.getElementById("enable_behaviours");
 
 fillDropdown(docEl, doclist.all);
@@ -368,13 +369,14 @@ function updateUIEditorOptions() {
     saveOption(showHScrollEl, editor.renderer.getHScrollBarAlwaysVisible());
     saveOption(animateScrollEl, editor.getAnimatedScroll());
     saveOption(softTabEl, session.getUseSoftTabs());
+    saveOption(navigateWithinSoftTabEl, session.getNavigateWithinSoftTabs());
     saveOption(behavioursEl, editor.getBehavioursEnabled());
 }
 
 themelist.themes.forEach(function(x){ x.value = x.theme });
 fillDropdown(themeEl, {
     Bright: themelist.themes.filter(function(x){return !x.isDark}),
-    Dark: themelist.themes.filter(function(x){return x.isDark}),
+    Dark: themelist.themes.filter(function(x){return x.isDark})
 });
 
 event.addListener(themeEl, "mouseover", function(e){
@@ -460,6 +462,10 @@ bindCheckbox("animate_scroll", function(checked) {
 
 bindCheckbox("soft_tab", function(checked) {
     env.editor.session.setUseSoftTabs(checked);
+});
+
+bindCheckbox("navigate_within_soft_tab", function(checked) {
+    env.editor.session.setNavigateWithinSoftTabs(checked);
 });
 
 bindCheckbox("enable_behaviours", function(checked) {
@@ -581,5 +587,54 @@ env.editor.setOptions({
 
 var beautify = require("ace/ext/beautify");
 env.editor.commands.addCommands(beautify.commands);
+
+
+// global keybindings
+
+var KeyBinding = require("ace/keyboard/keybinding").KeyBinding;
+var CommandManager = require("ace/commands/command_manager").CommandManager;
+var commandManager = new CommandManager();
+var kb = new KeyBinding({
+    commands: commandManager,
+    fake: true
+});
+event.addCommandKeyListener(document.documentElement, kb.onCommandKey.bind(kb));
+event.addListener(document.documentElement, "keyup", function(e) {
+    if (e.keyCode === 18) // do not trigger browser menu on windows
+        e.preventDefault();
+});
+commandManager.addCommands([{
+    name: "window-left",
+    bindKey: {win: "cmd-alt-left", mac: "ctrl-cmd-left"},
+    exec: function() {
+        moveFocus("left");
+    }
+}, {
+    name: "window-right",
+    bindKey: {win: "cmd-alt-right", mac: "ctrl-cmd-right"},
+    exec: function() {
+        moveFocus("right");
+    }
+}, {
+    name: "window-up",
+    bindKey: {win: "cmd-alt-up", mac: "ctrl-cmd-up"},
+    exec: function() {
+        moveFocus("up");
+    }
+}, {
+    name: "window-down",
+    bindKey: {win: "cmd-alt-down", mac: "ctrl-cmd-down"},
+    exec: function() {
+        moveFocus("down");
+    }
+}]);
+
+function moveFocus() {
+    var el = document.activeElement;
+    if (el == env.editor.textInput.getElement())
+        env.editor.cmdLine.focus();    
+    else
+        env.editor.focus();
+}
 
 });
